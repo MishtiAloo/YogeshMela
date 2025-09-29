@@ -7,43 +7,47 @@ use Illuminate\Http\Request;
 
 class ButcherOrderController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
     public function index()
     {
-        //
+        return response()->json(ButcherOrder::all());
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
     public function store(Request $request)
     {
-        //
+        $validated = $request->validate([
+            'order_id'       => 'required|exists:orders,id',
+            'butcher_id'     => 'required|exists:users,id',
+            'scheduled_date' => 'required|date',
+            'charge'         => 'required|numeric|min:1',
+            'status'         => 'required|in:scheduled,completed,cancelled',
+        ]);
+
+        $butcherOrder = ButcherOrder::create($validated);
+
+        return response()->json($butcherOrder, 201);
     }
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(ButcherOrder $ButcherOrder)
+    public function show(ButcherOrder $butcherOrder)
     {
-        //
+        return response()->json($butcherOrder);
     }
 
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, ButcherOrder $ButcherOrder)
+    public function update(Request $request, ButcherOrder $butcherOrder)
     {
-        //
+        $validated = $request->validate([
+            'scheduled_date' => 'sometimes|date',
+            'charge'         => 'sometimes|numeric|min:1',
+            'status'         => 'sometimes|in:scheduled,completed,cancelled',
+        ]);
+
+        $butcherOrder->update($validated);
+
+        return response()->json($butcherOrder);
     }
 
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(ButcherOrder $butcher)
+    public function destroy(ButcherOrder $butcherOrder)
     {
-        //
+        $butcherOrder->delete();
+        return response()->json(['message' => 'Butcher order deleted']);
     }
 }

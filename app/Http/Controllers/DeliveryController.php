@@ -7,43 +7,49 @@ use Illuminate\Http\Request;
 
 class DeliveryController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
     public function index()
     {
-        //
+        return response()->json(Delivery::all());
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
     public function store(Request $request)
     {
-        //
+        $validated = $request->validate([
+            'order_id'         => 'required|exists:orders,id',
+            'delivery_man_id'  => 'required|exists:users,id',
+            'delivery_date'    => 'required|date',
+            'delivery_address' => 'required|string',
+            'charge'           => 'required|numeric|min:1',
+            'status'           => 'required|in:scheduled,completed,cancelled',
+        ]);
+
+        $delivery = Delivery::create($validated);
+
+        return response()->json($delivery, 201);
     }
 
-    /**
-     * Display the specified resource.
-     */
     public function show(Delivery $delivery)
     {
-        //
+        return response()->json($delivery);
     }
 
-    /**
-     * Update the specified resource in storage.
-     */
     public function update(Request $request, Delivery $delivery)
     {
-        //
+        $validated = $request->validate([
+            'delivery_date'    => 'sometimes|date',
+            'delivery_address' => 'sometimes|string',
+            'charge'           => 'sometimes|numeric|min:1',
+            'status'           => 'sometimes|in:scheduled,completed,cancelled',
+        ]);
+
+        $delivery->update($validated);
+
+        return response()->json($delivery);
     }
 
-    /**
-     * Remove the specified resource from storage.
-     */
     public function destroy(Delivery $delivery)
     {
-        //
+        $delivery->delete();
+        return response()->json(['message' => 'Delivery deleted']);
     }
 }
