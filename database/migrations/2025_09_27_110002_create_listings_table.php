@@ -20,7 +20,6 @@ return new class extends Migration {
             $table->enum('status', ['available','sold'])->default('available');
             $table->timestamps();
         });
-        
     }
 
     public function down(): void
