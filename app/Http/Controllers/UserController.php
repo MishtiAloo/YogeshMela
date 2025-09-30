@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Order;
 use App\Models\User;
 
 use Illuminate\Http\Request;
@@ -128,5 +129,49 @@ class UserController extends Controller
         $request->session()->regenerateToken(); 
 
         return response()->json(['message' => 'Logged out successfully']);
+    }
+
+
+    public function trackOrder(User $user)
+    {
+        // Ensure only the logged-in buyer can track *their* orders
+        if (Auth::id() !== $user->id || $user->role !== 'buyer') {
+            return response()->json(['message' => 'Unauthorized'], 403);
+        }
+
+        // Get orders via relationship
+        $orders = $user->orders;
+
+        return response()->json([
+            'buyer'  => $user,
+            'orders' => $orders,
+        ]);
+    }
+
+    public function filterOrders(Request $request)
+    {
+        $query = Order::query();
+
+        // Optional filters (only applied if passed in request)
+        if ($request->filled('buyer_id')) {
+            $query->where('buyer_id', $request->buyer_id);
+        }
+
+        if ($request->filled('butcher_service')) {
+            $query->where('butcher_service', $request->butcher_service);
+        }
+
+        if ($request->filled('delivery_service')) {
+            $query->where('delivery_service', $request->delivery_service);
+        }
+
+        if ($request->filled('status')) {
+            $query->where('status', $request->status);
+        }
+
+        // Get filtered results
+        $orders = $query->with(['buyer', 'listing'])->get();
+
+        return response()->json($orders);
     }
 }

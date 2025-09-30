@@ -32,7 +32,13 @@ Route::get('/seller/dashboard', [SellerDashboardController::class, 'dashboard'])
     ->middleware(['auth', 'role:seller'])
     ->name('seller.dashboard');
 
+Route::get('/users/{user}/trackorder', [UserController::class, 'trackOrder'])
+    ->middleware(['auth'])  
+    ->name('users.trackorder');
 
+Route::get('/admin/listings/filter', [AdminDashboardController::class, 'filterListings'])
+    ->middleware(['auth', 'role:admin'])
+    ->name('admin.listings.filter');
 
 // Health check
 Route::get('/ping', fn () => response()->json(['message' => 'pong']));
