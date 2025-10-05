@@ -128,11 +128,13 @@ class UserController extends Controller
 
     public function logout(Request $request) {
         Auth::logout();
+    
         $request->session()->invalidate();
         $request->session()->regenerateToken();
-
-        return response()->json(['message' => 'Logged out successfully']);
+    
+        return redirect('/')->with('status', 'Logged out successfully');
     }
+    
 
     public function showLoginForm()
     {
