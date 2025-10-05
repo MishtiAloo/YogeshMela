@@ -24,7 +24,7 @@ Route::middleware(['web'])->group(function () {
     Route::post('/register', [UserController::class, 'store'])
         ->withoutMiddleware([VerifyCsrfToken::class])->name('register');
     Route::post('/users/logout', [UserController::class, 'logout'])
-        ->withoutMiddleware([VerifyCsrfToken::class]);
+        ->withoutMiddleware([VerifyCsrfToken::class])->name('logout');
 });
 
 Route::get('/admin/dashboard', [AdminDashboardController::class, 'dashboard'])
@@ -39,7 +39,7 @@ Route::get('/seller/dashboard', [SellerDashboardController::class, 'dashboard'])
     ->middleware(['auth', 'role:seller'])
     ->name('seller.dashboard');
 
-Route::get('/seller/listings/create', [ListingController::class, 'create'])
+Route::get('/seller/listings/create', [ListingController::class, 'showCreateListing'])
     ->middleware(['auth', 'role:seller'])
     ->name('seller.listings.create');
 
@@ -47,7 +47,7 @@ Route::post('/seller/listings', [ListingController::class, 'store'])
     ->middleware(['auth', 'role:seller'])
     ->name('seller.listings.store');
 
-Route::get('/seller/listings/{listing}/edit', [ListingController::class, 'edit'])
+Route::get('/seller/listings/{listing}/edit', [ListingController::class, 'showEditListing'])
     ->middleware(['auth', 'role:seller'])
     ->name('seller.listings.edit');
 

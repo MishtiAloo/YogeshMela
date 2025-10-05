@@ -4,7 +4,7 @@
 
 @section('content')
 <style>
-    .container {
+    main .container {
         max-width: 700px;
         margin: 2rem auto;
         padding: 0 20px;
@@ -134,11 +134,6 @@
 
         <button type="submit" class="btn btn-primary">Update Listing</button>
         <a href="{{ route('seller.dashboard') }}" class="btn btn-secondary">Cancel</a>
-        <form action="{{ route('seller.listings.destroy', $listing->id) }}" method="POST" style="display: inline;" onsubmit="return confirm('Are you sure you want to delete this listing?');">
-            @csrf
-            @method('DELETE')
-            <button type="submit" class="btn btn-danger">Delete Listing</button>
-        </form>
     </form>
 </div>
 @endsection
