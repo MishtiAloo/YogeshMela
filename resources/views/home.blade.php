@@ -287,6 +287,8 @@
         <h1>🐄 Find Your Perfect Qurbani Animal</h1>
         <p>Premium quality cows, goats, sheep, and camels from verified sellers across Bangladesh</p>
         <div class="hero-buttons">
+            <a href="{{ route('login') }}" class="btn btn-secondary">Login</a>
+            <a href="{{ route('register') }}" class="btn btn-secondary">Register</a>
             <a href="/listings" class="btn btn-primary">Browse Animals</a>
             <a href="/sellers/register" class="btn btn-secondary">Become a Seller</a>
         </div>
