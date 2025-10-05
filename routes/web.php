@@ -12,8 +12,12 @@ Route::get('/', [HomeController::class, 'index'])->name('home');
 
 // Auth routes (login/logout)
 Route::middleware(['web'])->group(function () {
-    Route::post('/users/login', [UserController::class, 'login'])
-        ->withoutMiddleware([VerifyCsrfToken::class]);
+    Route::get('/login', [UserController::class, 'showLoginForm'])->name('login');
+    Route::post('/login', [UserController::class, 'login'])
+        ->withoutMiddleware([VerifyCsrfToken::class])->name('login');
+    Route::get('/register', [UserController::class, 'showRegisterForm'])->name('register');
+    Route::post('/register', [UserController::class, 'store'])
+        ->withoutMiddleware([VerifyCsrfToken::class])->name('register');
     Route::post('/users/logout', [UserController::class, 'logout'])
         ->withoutMiddleware([VerifyCsrfToken::class]);
 });
