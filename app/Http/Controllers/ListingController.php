@@ -8,9 +8,58 @@ use Illuminate\Support\Facades\Auth;
 
 class ListingController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        return response()->json(Listing::all());
+        // Start with base query
+        $query = Listing::with('user')->where('status', 'available');
+
+        // Filter by animal type
+        if ($request->filled('animal_type')) {
+            $query->where('animal_type', $request->animal_type);
+        }
+
+        // Filter by location (partial match)
+        if ($request->filled('location')) {
+            $query->where('location', 'like', '%' . $request->location . '%');
+        }
+
+        // Filter by breed (partial match)
+        if ($request->filled('breed')) {
+            $query->where('breed', 'like', '%' . $request->breed . '%');
+        }
+
+        // Filter by minimum price
+        if ($request->filled('min_price')) {
+            $query->where('price', '>=', $request->min_price);
+        }
+
+        // Filter by maximum price
+        if ($request->filled('max_price')) {
+            $query->where('price', '<=', $request->max_price);
+        }
+
+        // Filter by minimum weight
+        if ($request->filled('min_weight')) {
+            $query->where('weight', '>=', $request->min_weight);
+        }
+
+        // Filter by maximum weight
+        if ($request->filled('max_weight')) {
+            $query->where('weight', '<=', $request->max_weight);
+        }
+
+        // Sorting
+        $sortBy = $request->get('sort_by', 'created_at');
+        $sortOrder = $request->get('sort_order', 'desc');
+        
+        if (in_array($sortBy, ['price', 'weight', 'age', 'created_at'])) {
+            $query->orderBy($sortBy, $sortOrder);
+        }
+
+        // For web requests, paginate and return view
+        $listings = $query->paginate(12)->withQueryString();
+        
+        return view('listings.index', compact('listings'));
     }
 
     public function store(Request $request)
