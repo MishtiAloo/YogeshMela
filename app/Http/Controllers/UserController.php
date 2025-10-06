@@ -45,10 +45,7 @@ class UserController extends Controller
         // Auth::login($user);
         // $request->session()->regenerate();
 
-        return response()->json([
-            'message' => 'User created successfully',
-            'user' => $user
-        ], 201);
+        return redirect()->route('login')->with('success', 'Account created successfully! Please log in.');
     }
 
     /**
@@ -112,23 +109,41 @@ class UserController extends Controller
         if (Auth::attempt($credentials)) {
             $request->session()->regenerate();
 
-            return response()->json([
-                'message' => 'Login successful',
-                'user'    => Auth::user()
-            ]);
+            // Redirect based on role
+            $user = Auth::user();
+            switch ($user->role) {
+                case 'admin':
+                    return redirect()->route('admin.dashboard');
+                case 'buyer':
+                    return redirect()->route('buyer.dashboard');
+                case 'seller':
+                    return redirect()->route('seller.dashboard');
+                default:
+                    return redirect()->route('home');
+            }
         }
 
-        return response()->json([
-            'message' => 'Invalid credentials'
-        ], 401);
+        return back()->withErrors(['email' => 'Invalid credentials']);
     }
 
-    public function logout(Request $request) { 
-        Auth::logout(); 
-        $request->session()->invalidate(); 
-        $request->session()->regenerateToken(); 
+    public function logout(Request $request) {
+        Auth::logout();
+    
+        $request->session()->invalidate();
+        $request->session()->regenerateToken();
+    
+        return redirect('/')->with('status', 'Logged out successfully');
+    }
+    
 
-        return response()->json(['message' => 'Logged out successfully']);
+    public function showLoginForm()
+    {
+        return view('login');
+    }
+
+    public function showRegisterForm()
+    {
+        return view('register');
     }
 
 

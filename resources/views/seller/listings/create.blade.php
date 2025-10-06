@@ -1,0 +1,130 @@
+@extends('layouts.app')
+
+@section('title', 'Add New Listing - Seller Dashboard')
+
+@section('content')
+<style>
+    main .container {
+        max-width: 700px;
+        margin: 2rem auto;
+        padding: 0 20px;
+    }
+
+    .form-group {
+        margin-bottom: 1.5rem;
+    }
+
+    .form-group label {
+        display: block;
+        margin-bottom: 0.5rem;
+        font-weight: 600;
+        color: #2d3748;
+    }
+
+    .form-control {
+        width: 100%;
+        padding: 0.75rem;
+        border: 1px solid #ddd;
+        border-radius: 5px;
+        font-size: 1rem;
+        font-family: inherit;
+    }
+
+    .form-control:focus {
+        outline: none;
+        border-color: #667eea;
+        box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+    }
+
+    .btn {
+        display: inline-block;
+        padding: 0.75rem 1.5rem;
+        border-radius: 5px;
+        text-decoration: none;
+        font-weight: 600;
+        transition: all 0.3s;
+        border: none;
+        cursor: pointer;
+        margin-right: 1rem;
+    }
+
+    .btn-primary {
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        color: white;
+    }
+
+    .btn-primary:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
+    }
+
+    .btn-secondary {
+        background: #e2e8f0;
+        color: #4a5568;
+    }
+
+    .btn-secondary:hover {
+        background: #cbd5e0;
+    }
+</style>
+
+<div class="container">
+    <h1>Add New Listing</h1>
+
+    <form action="{{ route('seller.listings.store') }}" method="POST">
+        @csrf
+
+        <div class="form-group">
+            <label for="animal_type">Animal Type</label>
+            <select name="animal_type" id="animal_type" required class="form-control">
+                <option value="">Select Type</option>
+                <option value="cow">Cow</option>
+                <option value="goat">Goat</option>
+                <option value="sheep">Sheep</option>
+                <option value="camel">Camel</option>
+            </select>
+        </div>
+
+        <div class="form-group">
+            <label for="breed">Breed</label>
+            <input type="text" name="breed" id="breed" class="form-control" placeholder="Breed (optional)">
+        </div>
+
+        <div class="form-group">
+            <label for="age">Age (months)</label>
+            <input type="number" name="age" id="age" min="1" required class="form-control">
+        </div>
+
+        <div class="form-group">
+            <label for="weight">Weight (kg)</label>
+            <input type="number" name="weight" id="weight" min="1" step="0.1" required class="form-control">
+        </div>
+
+        <div class="form-group">
+            <label for="price">Price (৳)</label>
+            <input type="number" name="price" id="price" min="1" step="0.01" required class="form-control">
+        </div>
+
+        <div class="form-group">
+            <label for="location">Location</label>
+            <input type="text" name="location" id="location" required class="form-control">
+        </div>
+
+        <div class="form-group">
+            <label for="vaccination_info">Vaccination Info</label>
+            <textarea name="vaccination_info" id="vaccination_info" class="form-control" rows="3" placeholder="Vaccination details (optional)"></textarea>
+        </div>
+
+        <div class="form-group">
+            <label for="status">Status</label>
+            <select name="status" id="status" required class="form-control">
+                <option value="available">Available</option>
+                <option value="sold">Sold</option>
+            </select>
+        </div>
+
+        <button type="submit" class="btn btn-primary">Add Listing</button>
+        <a href="{{ route('seller.dashboard') }}" class="btn btn-secondary">Cancel</a>
+    </form>
+</div>
+@endsection

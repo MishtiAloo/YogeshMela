@@ -151,10 +151,29 @@
                 <li><a href="/listings">Browse Animals</a></li>
                 <li><a href="/about">About</a></li>
                 <li><a href="/contact">Contact</a></li>
-                <li><a href="/login" class="btn btn-secondary" style="padding: 0.5rem 1rem;">Login</a></li>
+    
+                @guest
+                    <!-- Show login if not logged in -->
+                    <li>
+                        <a href="{{ route('login') }}" class="btn btn-secondary" style="padding: 0.5rem 1rem;">Login</a>
+                    </li>
+                @endguest
+    
+                @auth
+                    <!-- Show logout if logged in -->
+                    <li>
+                        <form action="{{ route('logout') }}" method="POST" style="display:inline;">
+                            @csrf
+                            <button type="submit" class="btn btn-secondary" style="padding: 0.5rem 1rem; background:#e53e3e; color:white;">
+                                Logout
+                            </button>
+                        </form>
+                    </li>
+                @endauth
             </ul>
         </div>
     </nav>
+    
 
     <!-- Main Content -->
     <main>
