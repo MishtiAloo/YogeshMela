@@ -86,7 +86,18 @@ class ListingController extends Controller
 
     public function show(Listing $listing)  
     {
-        return response()->json($listing);
+        // Load the listing with user (seller) relationship
+        $listing->load('user');
+        
+        // Get related listings (same animal type, exclude current)
+        $relatedListings = Listing::where('animal_type', $listing->animal_type)
+            ->where('id', '!=', $listing->id)
+            ->where('status', 'available')
+            ->with('user')
+            ->take(4)
+            ->get();
+        
+        return view('listings.show', compact('listing', 'relatedListings'));
     }
 
     public function showCreateListing()
