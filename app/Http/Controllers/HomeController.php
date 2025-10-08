@@ -11,7 +11,7 @@ class HomeController extends Controller
     {
         // Get featured listings (promoted or available listings)
         $featuredListings = Listing::where('status', 'available')
-            ->with('user')
+            ->with('seller')
             ->latest()
             ->take(6)
             ->get();

@@ -359,7 +359,7 @@
                 </div>
                 <div class="listing-content">
                     <span class="listing-type">{{ ucfirst($listing->animal_type) }}</span>
-                    @if($listing->user->verified)
+                    @if($listing->seller->verified)
                         <span class="badge verified">✓ Verified Seller</span>
                     @endif
                     <h3>{{ $listing->breed }}</h3>

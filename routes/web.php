@@ -8,6 +8,8 @@ use App\Http\Controllers\ListingController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\AboutController;
 use App\Http\Controllers\ContactController;
+use App\Http\Controllers\PromotionController;
+
 use Illuminate\Foundation\Http\Middleware\VerifyCsrfToken;
 use Illuminate\Support\Facades\Route;
 
@@ -61,6 +63,30 @@ Route::delete('/seller/listings/{listing}', [ListingController::class, 'destroy'
     ->middleware(['auth', 'role:seller'])
     ->name('seller.listings.destroy');
 
+Route::get('/seller/promotions/{listing}/attach', [PromotionController::class, 'showAttachForm'])
+    ->middleware(['auth', 'role:seller'])
+    ->name('seller.promotions.attach');
+
+Route::post('/seller/promotions/{listing}/attach', [PromotionController::class, 'attach'])
+    ->middleware(['auth', 'role:seller'])
+    ->name('seller.promotions.store');
+
+Route::get('/seller/promotions/{promotion}/edit', [PromotionController::class, 'showEditForm'])
+    ->middleware(['auth', 'role:seller'])
+    ->name('seller.promotions.edit');
+
+Route::put('/seller/promotions/{promotion}', [PromotionController::class, 'updatePromotion'])
+    ->middleware(['auth', 'role:seller'])
+    ->name('seller.promotions.update');
+
+Route::post('/seller/promotions/{promotion}/end', [PromotionController::class, 'end'])
+    ->middleware(['auth', 'role:seller'])
+    ->name('seller.promotions.end');
+
+Route::post('/seller/request-verification', [SellerDashboardController::class, 'requestVerification'])
+    ->middleware(['auth', 'role:seller'])
+    ->name('seller.request.verification');
+
 Route::get('/users/{user}/trackorder', [UserController::class, 'trackOrder'])
     ->middleware(['auth'])
     ->name('users.trackorder');
@@ -68,6 +94,31 @@ Route::get('/users/{user}/trackorder', [UserController::class, 'trackOrder'])
 Route::get('/admin/listings/filter', [AdminDashboardController::class, 'filterListings'])
     ->middleware(['auth', 'role:admin'])
     ->name('admin.listings.filter');
+
+Route::get('/admin/sellers', [AdminDashboardController::class, 'getSellers'])
+    ->middleware(['auth', 'role:admin'])
+    ->name('admin.sellers');
+
+Route::get('/admin/buyers', [AdminDashboardController::class, 'getBuyers'])
+    ->middleware(['auth', 'role:admin'])
+    ->name('admin.buyers');
+
+Route::get('/admin/orders/filter', [AdminDashboardController::class, 'filterOrders'])
+    ->middleware(['auth', 'role:admin'])
+    ->name('admin.orders.filter');
+
+Route::get('/admin/deliveries', [AdminDashboardController::class, 'getDeliveries'])
+    ->middleware(['auth', 'role:admin'])
+    ->name('admin.deliveries');
+
+Route::get('/admin/butcher-orders', [AdminDashboardController::class, 'getButcherOrders'])
+    ->middleware(['auth', 'role:admin'])
+    ->name('admin.butcher-orders');
+
+Route::put('/users/{user}', [UserController::class, 'update'])
+    ->middleware(['auth', 'role:admin'])
+    ->name('users.update');
+
 
 // Health check
 Route::get('/ping', fn () => response()->json(['message' => 'pong']));

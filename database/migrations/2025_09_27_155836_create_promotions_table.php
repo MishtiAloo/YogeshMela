@@ -17,6 +17,7 @@ return new class extends Migration
             $table->decimal('amount_paid', 10,2);
             $table->decimal('fixed_discount', 10, 2)->nullable();
             $table->decimal('percent_discount', 10, 2)->nullable();
+            $table->enum('status', ['pending', 'active', 'expired'])->default('pending');
             $table->date('start_date');
             $table->date('end_date');
             $table->timestamps();

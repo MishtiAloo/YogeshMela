@@ -16,10 +16,6 @@ class UserSeeder extends Seeder
             'email'      => 'ggg@gg.com',
             'password'   => Hash::make('gggg'), 
             'phone'      => '01700000000',
-            'house_no'   => '10',
-            'road_no'    => '5',
-            'thana'      => 'Banani',
-            'postal_code'=> '1213',
             'city'       => 'Dhaka',
             'division'   => 'Dhaka Division',
             'role'       => 'admin',
@@ -27,6 +23,6 @@ class UserSeeder extends Seeder
         ]);
 
         // Generate 20 fake users
-        User::factory(20)->create();
+        User::factory(40)->create();
     }
 }

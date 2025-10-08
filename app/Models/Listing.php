@@ -14,8 +14,8 @@ class Listing extends Model
         'location','vaccination_info','status'
     ];
 
-    public function user() {
-        return $this->belongsTo(User::class);
+    public function seller() {
+        return $this->belongsTo(User::class, 'user_id');
     }
 
     public function orders() {

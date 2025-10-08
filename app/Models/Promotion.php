@@ -11,7 +11,7 @@ class Promotion extends Model
     use HasFactory;
 
     protected $fillable = [
-        'listing_id','amount_paid','fixed_discount','percent_discount','start_date','end_date'
+        'listing_id','amount_paid','fixed_discount','percent_discount', 'status', 'start_date','end_date'
     ];
 
     public function listing() {

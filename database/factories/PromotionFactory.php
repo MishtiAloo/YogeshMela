@@ -20,6 +20,7 @@ class PromotionFactory extends Factory
             'amount_paid' => $this->faker->randomFloat(2, 500, 5000),
             'fixed_discount' => $this->faker->optional()->randomFloat(2, 100, 1000),
             'percent_discount' => $this->faker->optional()->randomFloat(2, 5, 30),
+            'status' => $this->faker->randomElement(['pending', 'active', 'expired']),
             'start_date' => $this->faker->dateTimeBetween('now','+5 days'),
             'end_date' => $this->faker->dateTimeBetween('+6 days','+20 days'),
         ];

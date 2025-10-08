@@ -73,7 +73,7 @@ class UserController extends Controller
             'city'       => 'nullable|string|max:100',
             'division'   => 'nullable|string|max:100',
             'role'       => 'sometimes|in:buyer,seller,admin,butcher,delivery_man',
-            'verified'   => 'sometimes|boolean',
+            'verified' => 'sometimes|in:pending,verified,unverified',
         ]);
 
         if (isset($validated['password'])) {
@@ -82,10 +82,9 @@ class UserController extends Controller
 
         $user->update($validated);
 
-        return response()->json([
-            'message' => 'User updated successfully',
-            'user'    => $user
-        ]);
+        return redirect()
+        ->route('admin.dashboard')
+        ->with('success', 'User updated successfully');
     }
 
     /**
