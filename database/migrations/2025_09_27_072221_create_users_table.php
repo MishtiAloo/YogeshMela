@@ -18,19 +18,15 @@ return new class extends Migration
             $table->string('name');
             $table->string('email')->unique();
             $table->string('password');
+            $table->string('phone')->nullable();
 
             // Address Fields
-            $table->string('phone')->nullable();
-            $table->string('house_no')->nullable();
-            $table->string('road_no')->nullable();
-            $table->string('thana')->nullable();
-            $table->string('postal_code')->nullable();
             $table->string('city')->nullable();
             $table->string('division')->nullable();
 
             // Role Specifics
             $table->enum('role', ['buyer','seller','admin', 'butcher', 'delivery_man']);
-            $table->boolean('verified')->default(false);
+            $table->enum('verified', ['unverified', 'pending', 'verified']);
             $table->timestamps();
         });
     }

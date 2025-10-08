@@ -7,24 +7,39 @@ use App\Models\Delivery;
 use App\Models\Listing;
 use App\Models\User;
 use App\Models\Order;
+use App\Models\Promotion;
 use Illuminate\Http\Request;
 
 class AdminDashboardController extends Controller
 {
-    public function dashboard()
+    public function dashboard(Request $request)
     {
-        $users  = User::all();
-        $orders = Order::all();
-        $listings = Listing::all();
-        $deliveries = Delivery::all();
-        $butcher_oreders = ButcherOrder::all();
+        $sellers = User::where('role', 'seller');
+        if ($request->filled('seller_verified')) {
+            $sellers = $sellers->where('verified', $request->seller_verified);
+        }
+        $sellers = $sellers->get();
+
+        $listings = Listing::with('seller');
+        $listings = $listings->get();
+
+        $orders = Order::with(['buyer', 'listing']);
+        if ($request->filled('order_status')) {
+            $orders = $orders->where('status', $request->order_status);
+        }
+        $orders = $orders->get();
+
+        $promotions = Promotion::with('listing');   
+        if ($request->filled('promotion_status')) {
+            $promotions = $promotions->where('status', $request->promotion_status);
+        }
+        $promotions = $promotions->get();
 
         return view('admin.dashboard', [
-            'users'  => $users,
-            'orders' => $orders,
+            'sellers' => $sellers,
             'listings' => $listings,
-            'deliveries' => $deliveries,
-            'butcher_orders' => $butcher_oreders,
+            'orders' => $orders,
+            'promotions' => $promotions,
         ]);
     }
 
@@ -53,18 +68,6 @@ class AdminDashboardController extends Controller
         $orders = $query->with(['buyer', 'listing'])->get();
 
         return response()->json($orders);
-
-        // Get all orders with status=confirmed:
-        // GET /admin/orders/filter?status=confirmed
-
-        // Get all orders from a specific buyer:
-        // GET /admin/orders/filter?buyer_id=5
-
-        // Get all orders where delivery service is enabled:
-        // GET /admin/orders/filter?delivery_service=1
-
-        // Combine filters:
-        // GET /admin/orders/filter?status=delivered&butcher_service=1
     }
 
     public function filterListings(Request $request)
@@ -118,18 +121,20 @@ class AdminDashboardController extends Controller
         $listings = $query->with('seller')->get();
 
         return response()->json($listings);
+    }
 
-        // All goat listings:
-        // GET /admin/listings/filter?animal_type=goat
+    // Sellers management
+    public function getSellers(Request $request)
+    {
+        $query = User::where('role', 'seller');
 
-        // All available listings in Dhaka:
-        // GET /admin/listings/filter?location=Dhaka&status=available
+        if ($request->filled('verified')) {
+            $query->where('verified', $request->boolean('verified'));
+        }
 
-        // Cows weighing more than 200kg:
-        // GET /admin/listings/filter?animal_type=cow&min_weight=200
+        $sellers = $query->get();
 
-        // Price range filter:
-        // GET /admin/listings/filter?min_price=50000&max_price=100000
+        return response()->json($sellers);
     }
 
 }

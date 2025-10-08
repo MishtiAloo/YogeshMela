@@ -77,7 +77,24 @@
 </style>
 
 <div class="dashboard-container">
-    <h1>Welcome, {{ $seller->name }}</h1>
+    <h1>Welcome, {{ $seller->name }}
+        @if($seller->verified === 'verified')
+            <span style="color: green; font-size: 0.8em;">✓ Verified</span>
+        @elseif($seller->verified === 'pending')
+            <span style="color: orange; font-size: 0.8em;">Pending Verification</span>
+        @else
+            <form action="{{ route('seller.request.verification') }}" method="POST" style="display: inline; margin-left: 1rem;">
+                @csrf
+                <button type="submit" class="btn btn-add" style="font-size: 0.8em; padding: 0.3rem 0.6rem;">Request Verification</button>
+            </form>
+        @endif
+    </h1>
+
+    @if(session('success'))
+        <div style="background-color: #d4edda; color: #155724; padding: 1rem; border-radius: 5px; margin-bottom: 1rem;">
+            {{ session('success') }}
+        </div>
+    @endif
 
     <a href="{{ route('seller.listings.create') }}" class="btn btn-add">Add New Listing</a>
 
@@ -94,6 +111,7 @@
                     <th>Price (৳)</th>
                     <th>Location</th>
                     <th>Status</th>
+                    <th>Promo Stat</th>
                     <th>Actions</th>
                 </tr>
             </thead>
@@ -107,6 +125,21 @@
                     <td>{{ number_format($listing->price, 2) }}</td>
                     <td>{{ $listing->location }}</td>
                     <td>{{ ucfirst($listing->status) }}</td>
+                    <td>
+                        @if(isset($promotions[$listing->id]))
+                            @php $promo = $promotions[$listing->id]; @endphp
+                            @if($promo->status == 'pending')
+                                Pending
+                            @elseif($promo->status == 'active')
+                                <a href="{{ route('seller.promotions.end', $promo->id) }}" class="btn btn-delete" onclick="return confirm('Are you sure you want to end this promotion?');">End Promo</a>
+                                <a href="{{ route('seller.promotions.edit', $promo->id) }}" class="btn btn-edit">Edit Promo</a>
+                            @elseif($promo->status == 'expired')
+                                Expired
+                            @endif
+                        @else
+                            <a href="{{ route('seller.promotions.attach', $listing->id) }}" class="btn btn-add">Attach Promo</a>
+                        @endif
+                    </td>
                     <td>
                         <a href="{{ route('seller.listings.edit', $listing->id) }}" class="btn btn-edit">Edit</a>
                         <form action="{{ route('seller.listings.destroy', $listing->id) }}" method="POST" onsubmit="return confirm('Are you sure you want to delete this listing?');">
