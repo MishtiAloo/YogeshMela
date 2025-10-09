@@ -5,7 +5,7 @@
 @section('content')
 <style>
     .page-header {
-        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        background: linear-gradient(135deg, #14b8a6 0%, #134e4a 100%);
         color: white;
         padding: 3rem 0;
         text-align: center;
@@ -72,7 +72,7 @@
     .filter-group select:focus,
     .filter-group input:focus {
         outline: none;
-        border-color: #667eea;
+        border-color: #14b8a6;
     }
 
     .price-range-inputs {
@@ -98,7 +98,7 @@
     }
 
     .btn-apply {
-        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        background: linear-gradient(135deg, #14b8a6 0%, #134e4a 100%);
         color: white;
     }
 
@@ -138,7 +138,7 @@
     }
 
     .results-count strong {
-        color: #667eea;
+        color: #14b8a6;
     }
 
     .sort-controls {
@@ -180,7 +180,7 @@
 
     .listing-image {
         height: 180px;
-        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        background: linear-gradient(135deg, #14b8a6 0%, #134e4a 100%);
         display: flex;
         align-items: center;
         justify-content: center;
@@ -197,7 +197,7 @@
         border-radius: 20px;
         font-size: 0.8rem;
         font-weight: 600;
-        color: #667eea;
+        color: #14b8a6;
     }
 
     .listing-content {
@@ -206,7 +206,7 @@
 
     .listing-type {
         display: inline-block;
-        background: #667eea;
+        background: #14b8a6;
         color: white;
         padding: 0.25rem 0.75rem;
         border-radius: 20px;
@@ -254,7 +254,7 @@
     .listing-price {
         font-size: 1.5rem;
         font-weight: bold;
-        color: #667eea;
+        color: #14b8a6;
         margin-bottom: 0.75rem;
     }
 
@@ -270,7 +270,7 @@
     .btn-view-details {
         width: 100%;
         padding: 0.75rem;
-        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        background: linear-gradient(135deg, #14b8a6 0%, #134e4a 100%);
         color: white;
         border: none;
         border-radius: 5px;
@@ -318,15 +318,15 @@
     }
 
     .pagination a:hover {
-        background: #667eea;
+        background: #14b8a6;
         color: white;
-        border-color: #667eea;
+        border-color: #14b8a6;
     }
 
     .pagination .active span {
-        background: #667eea;
+        background: #14b8a6;
         color: white;
-        border-color: #667eea;
+        border-color: #14b8a6;
     }
 
     .pagination .disabled span {
@@ -375,7 +375,7 @@
 
     .filter-tag {
         display: inline-block;
-        background: #667eea;
+        background: #14b8a6;
         color: white;
         padding: 0.25rem 0.75rem;
         border-radius: 20px;

@@ -19,7 +19,7 @@
     }
 
     .breadcrumb a {
-        color: #667eea;
+        color: #14b8a6;
         text-decoration: none;
     }
 
@@ -45,7 +45,7 @@
     .main-image {
         width: 100%;
         height: 500px;
-        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        background: linear-gradient(135deg, #14b8a6 0%, #134e4a 100%);
         border-radius: 10px;
         display: flex;
         align-items: center;
@@ -64,7 +64,7 @@
         border-radius: 30px;
         font-size: 1rem;
         font-weight: 600;
-        color: #667eea;
+        color: #14b8a6;
         box-shadow: 0 2px 10px rgba(0,0,0,0.2);
     }
 
@@ -91,7 +91,7 @@
     .price-tag {
         font-size: 2.5rem;
         font-weight: bold;
-        color: #667eea;
+        color: #14b8a6;
         margin-bottom: 1rem;
     }
 
@@ -127,7 +127,7 @@
     .btn-cart {
         width: 100%;
         padding: 1rem;
-        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        background: linear-gradient(135deg, #14b8a6 0%, #134e4a 100%);
         color: white;
         border: none;
         border-radius: 5px;
@@ -153,8 +153,8 @@
         width: 100%;
         padding: 1rem;
         background: white;
-        color: #667eea;
-        border: 2px solid #667eea;
+        color: #14b8a6;
+        border: 2px solid #14b8a6;
         border-radius: 5px;
         font-size: 1rem;
         font-weight: 600;
@@ -163,7 +163,7 @@
     }
 
     .btn-contact:hover {
-        background: #667eea;
+        background: #14b8a6;
         color: white;
     }
 
@@ -184,7 +184,7 @@
     .seller-avatar {
         width: 60px;
         height: 60px;
-        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        background: linear-gradient(135deg, #14b8a6 0%, #134e4a 100%);
         border-radius: 50%;
         display: flex;
         align-items: center;
@@ -244,7 +244,7 @@
 
     .animal-type-badge {
         display: inline-block;
-        background: #667eea;
+        background: #14b8a6;
         color: white;
         padding: 0.5rem 1rem;
         border-radius: 25px;
@@ -264,7 +264,7 @@
         background: #f7fafc;
         padding: 1.5rem;
         border-radius: 10px;
-        border-left: 4px solid #667eea;
+        border-left: 4px solid #14b8a6;
     }
 
     .spec-label {
@@ -331,7 +331,7 @@
     .rating-number {
         font-size: 3rem;
         font-weight: bold;
-        color: #667eea;
+        color: #14b8a6;
     }
 
     .rating-stars {
@@ -390,8 +390,8 @@
         width: 100%;
         padding: 1rem;
         background: white;
-        color: #667eea;
-        border: 2px dashed #667eea;
+        color: #14b8a6;
+        border: 2px dashed #14b8a6;
         border-radius: 5px;
         font-weight: 600;
         cursor: pointer;
@@ -437,7 +437,7 @@
 
     .related-image {
         height: 150px;
-        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        background: linear-gradient(135deg, #14b8a6 0%, #134e4a 100%);
         display: flex;
         align-items: center;
         justify-content: center;
@@ -457,7 +457,7 @@
     .related-price {
         font-size: 1.3rem;
         font-weight: bold;
-        color: #667eea;
+        color: #14b8a6;
         margin-bottom: 0.5rem;
     }
 

@@ -14,8 +14,13 @@ class Listing extends Model
         'location','vaccination_info','status'
     ];
 
-    public function seller() {
+    public function user() {
         return $this->belongsTo(User::class, 'user_id');
+    }
+
+    // Alias for backward compatibility
+    public function seller() {
+        return $this->user();
     }
 
     public function orders() {
