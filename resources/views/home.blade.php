@@ -6,8 +6,8 @@
 <style>
     /* Hero Section */
     .hero {
-        background: linear-gradient(135deg, rgba(102, 126, 234, 0.9) 0%, rgba(118, 75, 162, 0.9) 100%),
-                    url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 600"><rect fill="%23f0f4f8" width="1200" height="600"/></svg>');
+        background: linear-gradient(135deg, rgba(20, 184, 166, 0.9) 0%, rgba(19, 78, 74, 0.9) 100%),
+                    url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 600"><rect fill="%23f0fdfa" width="1200" height="600"/></svg>');
         color: white;
         padding: 5rem 0;
         text-align: center;
@@ -146,7 +146,7 @@
     
     .listing-image {
         height: 200px;
-        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        background: linear-gradient(135deg, #14b8a6 0%, #0d9488 100%);
         display: flex;
         align-items: center;
         justify-content: center;
@@ -159,7 +159,7 @@
     
     .listing-type {
         display: inline-block;
-        background: #667eea;
+        background: #14b8a6;
         color: white;
         padding: 0.25rem 0.75rem;
         border-radius: 20px;
@@ -184,7 +184,7 @@
     .listing-price {
         font-size: 1.5rem;
         font-weight: bold;
-        color: #667eea;
+        color: #f97316;
         margin-bottom: 1rem;
     }
     
@@ -248,7 +248,7 @@
     
     /* CTA Section */
     .cta {
-        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        background: linear-gradient(135deg, #14b8a6 0%, #134e4a 100%);
         color: white;
         padding: 4rem 0;
         text-align: center;
