@@ -629,9 +629,22 @@
                     </span>
                 </div>
 
-                <button class="btn-cart" {{ $listing->status === 'sold' ? 'disabled' : '' }}>
-                    🛒 Add to Cart
-                </button>
+                @if(!auth()->check() || auth()->user()->role === 'buyer')
+                    <!-- Show Add to Cart button for guests and buyers only -->
+                    <form method="POST" action="{{ route('cart.add', $listing->id) }}" style="margin-bottom: 16px;">
+                        @csrf
+                        <button type="submit" class="btn-cart" {{ $listing->status === 'sold' ? 'disabled' : '' }}>
+                            🛒 Add to Cart
+                        </button>
+                    </form>
+                @else
+                    <!-- Show message for sellers and admins -->
+                    <div style="background-color: #fee2e2; border: 1px solid #ef4444; border-radius: 8px; padding: 12px; margin-bottom: 16px;">
+                        <p style="color: #991b1b; font-size: 14px; text-align: center; margin: 0;">
+                            Only buyers can add items to cart
+                        </p>
+                    </div>
+                @endif
                 <button class="btn-contact">📞 Contact Seller</button>
             </div>
 
