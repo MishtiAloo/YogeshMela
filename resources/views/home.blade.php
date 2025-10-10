@@ -99,7 +99,10 @@
     }
     
     .category-icon {
-        font-size: 4rem;
+        width: 4rem;
+        height: 4rem;
+        object-fit: cover;
+        border-radius: 10px;
         margin-bottom: 1rem;
     }
     
@@ -150,7 +153,13 @@
         display: flex;
         align-items: center;
         justify-content: center;
-        font-size: 4rem;
+        overflow: hidden;
+    }
+
+    .listing-image img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
     }
     
     .listing-content {
@@ -320,22 +329,22 @@
         <h2>Browse by Category</h2>
         <div class="category-grid">
             <a href="/listings?animal_type=cow" class="category-card">
-                <div class="category-icon">🐄</div>
+                <img src="/image/cera-Pn2XcR70E_g-unsplash.jpg" alt="Cow" class="category-icon">
                 <h3>Cows</h3>
                 <p>{{ $stats['cows'] ?? 0 }} available</p>
             </a>
             <a href="/listings?animal_type=goat" class="category-card">
-                <div class="category-icon">🐐</div>
+                <img src="/image/goats/50m-above-9chhynuIz28-unsplash.jpg" alt="Goat" class="category-icon">
                 <h3>Goats</h3>
                 <p>{{ $stats['goats'] ?? 0 }} available</p>
             </a>
             <a href="/listings?animal_type=sheep" class="category-card">
-                <div class="category-icon">🐑</div>
+                <img src="/image/sheeps/jose-llamas-B_QP667GyPY-unsplash.jpg" alt="Sheep" class="category-icon">
                 <h3>Sheep</h3>
                 <p>{{ $stats['sheep'] ?? 0 }} available</p>
             </a>
             <a href="/listings?animal_type=camel" class="category-card">
-                <div class="category-icon">🐫</div>
+                <img src="/image/camels/maksim-golovko-EBPTkCcVeDE-unsplash.jpg" alt="Camel" class="category-icon">
                 <h3>Camels</h3>
                 <p>{{ $stats['camels'] ?? 0 }} available</p>
             </a>
@@ -351,10 +360,55 @@
             @forelse($featuredListings as $listing)
             <div class="listing-card">
                 <div class="listing-image">
-                    @if($listing->animal_type === 'cow') 🐄
-                    @elseif($listing->animal_type === 'goat') 🐐
-                    @elseif($listing->animal_type === 'sheep') 🐑
-                    @elseif($listing->animal_type === 'camel') 🐫
+                    @if($listing->animal_type === 'cow')
+                        @php
+                            $cowImages = [
+                                '/image/cera-Pn2XcR70E_g-unsplash.jpg',
+                                '/image/felicia-varzari-apE2kS6IYmI-unsplash.jpg',
+                                '/image/Gemini_Generated_Image_gqgdk7gqgdk7gqgd - Copy (2) - Copy.png',
+                                '/image/shalev-cohen-KTLEYHsy8CU-unsplash.jpg',
+                                '/image/veronica-white-uhMQmjSK6Iw-unsplash.jpg',
+                                '/image/wouter-r-S-UIYnAqME8-unsplash.jpg'
+                            ];
+                            $imageIndex = $listing->id % count($cowImages);
+                        @endphp
+                        <img src="{{ $cowImages[$imageIndex] }}" alt="Cow">
+                    @elseif($listing->animal_type === 'goat')
+                        @php
+                            $goatImages = [
+                                '/image/goats/50m-above-9chhynuIz28-unsplash.jpg',
+                                '/image/goats/jess-manthey-CiQOc9z4LbY-unsplash.jpg',
+                                '/image/goats/jorge-salvador-Cg_Di4KHxPE-unsplash.jpg',
+                                '/image/goats/mana5280-e8T_r8Q3kNg-unsplash.jpg',
+                                '/image/goats/muddy-toes-farm-llc-OJ3Zu5dtHVc-unsplash.jpg',
+                                '/image/goats/nataliya-melnychuk-2V8luifFK7w-unsplash.jpg',
+                                '/image/goats/robert-schwarz-ftlkViNWWKo-unsplash.jpg'
+                            ];
+                            $imageIndex = $listing->id % count($goatImages);
+                        @endphp
+                        <img src="{{ $goatImages[$imageIndex] }}" alt="Goat">
+                    @elseif($listing->animal_type === 'sheep')
+                        @php
+                            $sheepImages = [
+                                '/image/sheeps/jose-llamas-B_QP667GyPY-unsplash.jpg',
+                                '/image/sheeps/peter-hoogmoed-hKGWrHVj1H8-unsplash.jpg',
+                                '/image/sheeps/peter-hoogmoed-p-ARv5y0nKc-unsplash.jpg',
+                                '/image/sheeps/ronan-furuta-9xNiHyYuo-c-unsplash.jpg',
+                                '/image/sheeps/sophia-hopkins-CAAbbD7N9EE-unsplash.jpg'
+                            ];
+                            $imageIndex = $listing->id % count($sheepImages);
+                        @endphp
+                        <img src="{{ $sheepImages[$imageIndex] }}" alt="Sheep">
+                     @elseif($listing->animal_type === 'camel')
+                         @php
+                             $camelImages = [
+                                 '/image/camels/maksim-golovko-EBPTkCcVeDE-unsplash.jpg',
+                                 '/image/camels/maksim-golovko-nQvu3rMWkI0-unsplash.jpg',
+                                 '/image/camels/wolfgang-hasselmann-3fuKZxFP2ow-unsplash.jpg'
+                             ];
+                             $imageIndex = $listing->id % count($camelImages);
+                         @endphp
+                         <img src="{{ $camelImages[$imageIndex] }}" alt="Camel">
                     @endif
                 </div>
                 <div class="listing-content">
