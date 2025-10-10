@@ -318,8 +318,7 @@
                             
                             <!-- Common Links -->
                             <a href="#">⚙️ Settings</a>
-                            <a href="#">👤 Profile</a>
-                            
+                            <a class="dropdown-item" href="{{ route('profile.show') }}">👤 Profile</a>
                             <div class="divider"></div>
                             
                             <!-- Logout -->

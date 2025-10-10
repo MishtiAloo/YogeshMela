@@ -152,6 +152,11 @@
             </div>
 
             <div class="form-group">
+                <label for="address">Address</label>
+                <textarea id="address" name="address" class="form-control" required placeholder="Enter your full address" rows="3">{{ old('address') }}</textarea>
+            </div>
+
+            <div class="form-group">
                 <label for="role">Role</label>
                 <select id="role" name="role" class="form-control" required>
                     <option value="">Select your role</option>
