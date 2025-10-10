@@ -267,6 +267,16 @@
                 <li><a href="/listings">Browse Animals</a></li>
                 <li><a href="/about">About</a></li>
                 <li><a href="/contact">Contact</a></li>
+                
+                <!-- Cart Icon -->
+                <li>
+                    <a href="{{ route('cart.index') }}" style="position: relative; display: flex; align-items: center; gap: 5px;">
+                        <svg style="width: 24px; height: 24px;" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z"></path>
+                        </svg>
+                        <span id="cart-badge" style="position: absolute; top: -8px; right: -8px; background-color: #f97316; color: white; border-radius: 50%; width: 20px; height: 20px; display: flex; align-items: center; justify-content: center; font-size: 12px; font-weight: bold; display: none;">0</span>
+                    </a>
+                </li>
     
                 @guest
                     <!-- Show login if not logged in -->
@@ -370,5 +380,30 @@
             <p>&copy; {{ date('Y') }} YogeshMela. All rights reserved.</p>
         </div>
     </footer>
+
+    <!-- Cart Badge Update Script -->
+    <script>
+        // Update cart badge count on page load
+        function updateCartBadge() {
+            fetch('{{ route('cart.count') }}')
+                .then(response => response.json())
+                .then(data => {
+                    const badge = document.getElementById('cart-badge');
+                    if (data.count > 0) {
+                        badge.textContent = data.count;
+                        badge.style.display = 'flex';
+                    } else {
+                        badge.style.display = 'none';
+                    }
+                })
+                .catch(error => console.error('Error updating cart badge:', error));
+        }
+
+        // Run on page load
+        updateCartBadge();
+
+        // Update every 30 seconds (optional, for real-time updates)
+        setInterval(updateCartBadge, 30000);
+    </script>
 </body>
 </html>
