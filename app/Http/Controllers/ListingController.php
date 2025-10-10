@@ -87,13 +87,13 @@ class ListingController extends Controller
     public function show(Listing $listing)  
     {
         // Load the listing with user (seller) relationship
-        $listing->load('user');
+        $listing->load('seller');
         
         // Get related listings (same animal type, exclude current)
         $relatedListings = Listing::where('animal_type', $listing->animal_type)
             ->where('id', '!=', $listing->id)
             ->where('status', 'available')
-            ->with('user')
+            ->with('seller')
             ->take(4)
             ->get();
         

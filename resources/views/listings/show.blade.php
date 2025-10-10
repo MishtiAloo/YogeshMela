@@ -639,32 +639,32 @@
             <div class="seller-card">
                 <div class="seller-header">
                     <div class="seller-avatar">
-                        {{ strtoupper(substr($listing->user->name, 0, 1)) }}
+                        {{ strtoupper(substr($listing->seller->name, 0, 1)) }}
                     </div>
                     <div class="seller-info">
-                        <h3>{{ $listing->user->name }}</h3>
-                        @if($listing->user->verified)
+                        <h3>{{ $listing->seller->name }}</h3>
+                        @if($listing->seller->verified)
                             <span class="verified-seller">✓ Verified Seller</span>
                         @endif
                     </div>
                 </div>
 
                 <div class="seller-details">
-                    @if($listing->user->phone)
+                    @if($listing->seller->phone)
                     <div class="seller-detail-item">
-                        📱 {{ $listing->user->phone }}
+                        📱 {{ $listing->seller->phone }}
                     </div>
                     @endif
-                    @if($listing->user->email)
+                    @if($listing->seller->email)
                     <div class="seller-detail-item">
-                        ✉️ {{ $listing->user->email }}
+                        ✉️ {{ $listing->seller->email }}
                     </div>
                     @endif
                     <div class="seller-detail-item">
-                        📍 {{ $listing->user->city ?? 'Bangladesh' }}
+                        📍 {{ $listing->seller->city ?? 'Bangladesh' }}
                     </div>
                     <div class="seller-detail-item">
-                        👤 Member since {{ $listing->user->created_at->format('Y') }}
+                        👤 Member since {{ $listing->seller->created_at->format('Y') }}
                     </div>
                 </div>
             </div>
