@@ -16,8 +16,9 @@ class UserSeeder extends Seeder
             'email'      => 'ggg@gg.com',
             'password'   => Hash::make('gggg'), 
             'phone'      => '01700000000',
-            'city'       => 'Dhaka',
-            'division'   => 'Dhaka Division',
+            //'city'       => 'Dhaka',
+            //'division'   => 'Dhaka Division',
+            'address'    => 'House #1, Road #2, Dhaka, Dhaka Division',
             'role'       => 'admin',
             'verified'   => true,
         ]);
