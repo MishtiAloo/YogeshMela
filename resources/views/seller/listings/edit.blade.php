@@ -80,7 +80,7 @@
 <div class="container">
     <h1>Edit Listing</h1>
 
-    <form action="{{ route('seller.listings.update', $listing->id) }}" method="POST">
+    <form action="{{ route('seller.listings.update', $listing->id) }}" method="POST" enctype="multipart/form-data">
         @csrf
         @method('PUT')
 
@@ -122,6 +122,22 @@
         <div class="form-group">
             <label for="vaccination_info">Vaccination Info</label>
             <textarea name="vaccination_info" id="vaccination_info" class="form-control" rows="3" placeholder="Vaccination details (optional)">{{ $listing->vaccination_info }}</textarea>
+        </div>
+
+        <div class="form-group">
+            <label for="image">Animal Image</label>
+            @if($listing->image)
+                <div style="margin-bottom: 1rem;">
+                    @if(str_starts_with($listing->image, 'image/'))
+                        <img src="{{ asset($listing->image) }}" alt="Current Image" style="max-width: 200px; max-height: 200px; border: 1px solid #ddd; border-radius: 5px;">
+                    @else
+                        <img src="{{ asset('storage/' . $listing->image) }}" alt="Current Image" style="max-width: 200px; max-height: 200px; border: 1px solid #ddd; border-radius: 5px;">
+                    @endif
+                    <p style="margin-top: 0.5rem; font-size: 0.9rem; color: #666;">Current image. Upload a new one to replace it.</p>
+                </div>
+            @endif
+            <input type="file" name="image" id="image" accept="image/*" class="form-control">
+            <small style="color: #666;">Leave empty to keep current image. Max 2MB, JPEG/PNG/GIF only.</small>
         </div>
 
         <div class="form-group">

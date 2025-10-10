@@ -11,7 +11,7 @@ class Listing extends Model
 
     protected $fillable = [
         'user_id','animal_type','breed','age','weight','price',
-        'location','vaccination_info','status'
+        'location','vaccination_info','status','image'
     ];
 
     public function user() {
