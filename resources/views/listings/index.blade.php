@@ -5,7 +5,7 @@
 @section('content')
 <style>
     .page-header {
-        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        background: linear-gradient(135deg, #14b8a6 0%, #134e4a 100%);
         color: white;
         padding: 3rem 0;
         text-align: center;
@@ -72,7 +72,7 @@
     .filter-group select:focus,
     .filter-group input:focus {
         outline: none;
-        border-color: #667eea;
+        border-color: #14b8a6;
     }
 
     .price-range-inputs {
@@ -98,7 +98,7 @@
     }
 
     .btn-apply {
-        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        background: linear-gradient(135deg, #14b8a6 0%, #134e4a 100%);
         color: white;
     }
 
@@ -138,7 +138,7 @@
     }
 
     .results-count strong {
-        color: #667eea;
+        color: #14b8a6;
     }
 
     .sort-controls {
@@ -180,12 +180,18 @@
 
     .listing-image {
         height: 180px;
-        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        background: linear-gradient(135deg, #14b8a6 0%, #134e4a 100%);
         display: flex;
         align-items: center;
         justify-content: center;
-        font-size: 4rem;
         position: relative;
+        overflow: hidden;
+    }
+
+    .listing-image img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
     }
 
     .listing-badge {
@@ -197,7 +203,7 @@
         border-radius: 20px;
         font-size: 0.8rem;
         font-weight: 600;
-        color: #667eea;
+        color: #14b8a6;
     }
 
     .listing-content {
@@ -206,7 +212,7 @@
 
     .listing-type {
         display: inline-block;
-        background: #667eea;
+        background: #14b8a6;
         color: white;
         padding: 0.25rem 0.75rem;
         border-radius: 20px;
@@ -254,7 +260,7 @@
     .listing-price {
         font-size: 1.5rem;
         font-weight: bold;
-        color: #667eea;
+        color: #14b8a6;
         margin-bottom: 0.75rem;
     }
 
@@ -270,7 +276,7 @@
     .btn-view-details {
         width: 100%;
         padding: 0.75rem;
-        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        background: linear-gradient(135deg, #14b8a6 0%, #134e4a 100%);
         color: white;
         border: none;
         border-radius: 5px;
@@ -318,15 +324,15 @@
     }
 
     .pagination a:hover {
-        background: #667eea;
+        background: #14b8a6;
         color: white;
-        border-color: #667eea;
+        border-color: #14b8a6;
     }
 
     .pagination .active span {
-        background: #667eea;
+        background: #14b8a6;
         color: white;
-        border-color: #667eea;
+        border-color: #14b8a6;
     }
 
     .pagination .disabled span {
@@ -375,7 +381,7 @@
 
     .filter-tag {
         display: inline-block;
-        background: #667eea;
+        background: #14b8a6;
         color: white;
         padding: 0.25rem 0.75rem;
         border-radius: 20px;
@@ -519,10 +525,55 @@
                 @foreach($listings as $listing)
                 <div class="listing-card">
                     <div class="listing-image">
-                        @if($listing->animal_type === 'cow') 🐄
-                        @elseif($listing->animal_type === 'goat') 🐐
-                        @elseif($listing->animal_type === 'sheep') 🐑
-                        @elseif($listing->animal_type === 'camel') 🐫
+                        @if($listing->animal_type === 'cow')
+                            @php
+                                $cowImages = [
+                                    '/image/cera-Pn2XcR70E_g-unsplash.jpg',
+                                    '/image/felicia-varzari-apE2kS6IYmI-unsplash.jpg',
+                                    '/image/Gemini_Generated_Image_gqgdk7gqgdk7gqgd - Copy (2) - Copy.png',
+                                    '/image/shalev-cohen-KTLEYHsy8CU-unsplash.jpg',
+                                    '/image/veronica-white-uhMQmjSK6Iw-unsplash.jpg',
+                                    '/image/wouter-r-S-UIYnAqME8-unsplash.jpg'
+                                ];
+                                $imageIndex = $listing->id % count($cowImages);
+                            @endphp
+                            <img src="{{ $cowImages[$imageIndex] }}" alt="Cow">
+                        @elseif($listing->animal_type === 'goat')
+                            @php
+                                $goatImages = [
+                                    '/image/goats/50m-above-9chhynuIz28-unsplash.jpg',
+                                    '/image/goats/jess-manthey-CiQOc9z4LbY-unsplash.jpg',
+                                    '/image/goats/jorge-salvador-Cg_Di4KHxPE-unsplash.jpg',
+                                    '/image/goats/mana5280-e8T_r8Q3kNg-unsplash.jpg',
+                                    '/image/goats/muddy-toes-farm-llc-OJ3Zu5dtHVc-unsplash.jpg',
+                                    '/image/goats/nataliya-melnychuk-2V8luifFK7w-unsplash.jpg',
+                                    '/image/goats/robert-schwarz-ftlkViNWWKo-unsplash.jpg'
+                                ];
+                                $imageIndex = $listing->id % count($goatImages);
+                            @endphp
+                            <img src="{{ $goatImages[$imageIndex] }}" alt="Goat">
+                        @elseif($listing->animal_type === 'sheep')
+                            @php
+                                $sheepImages = [
+                                    '/image/sheeps/jose-llamas-B_QP667GyPY-unsplash.jpg',
+                                    '/image/sheeps/peter-hoogmoed-hKGWrHVj1H8-unsplash.jpg',
+                                    '/image/sheeps/peter-hoogmoed-p-ARv5y0nKc-unsplash.jpg',
+                                    '/image/sheeps/ronan-furuta-9xNiHyYuo-c-unsplash.jpg',
+                                    '/image/sheeps/sophia-hopkins-CAAbbD7N9EE-unsplash.jpg'
+                                ];
+                                $imageIndex = $listing->id % count($sheepImages);
+                            @endphp
+                            <img src="{{ $sheepImages[$imageIndex] }}" alt="Sheep">
+                        @elseif($listing->animal_type === 'camel')
+                            @php
+                                $camelImages = [
+                                    '/image/camels/maksim-golovko-EBPTkCcVeDE-unsplash.jpg',
+                                    '/image/camels/maksim-golovko-nQvu3rMWkI0-unsplash.jpg',
+                                    '/image/camels/wolfgang-hasselmann-3fuKZxFP2ow-unsplash.jpg'
+                                ];
+                                $imageIndex = $listing->id % count($camelImages);
+                            @endphp
+                            <img src="{{ $camelImages[$imageIndex] }}" alt="Camel">
                         @endif
                         <span class="listing-badge">{{ ucfirst($listing->status) }}</span>
                     </div>

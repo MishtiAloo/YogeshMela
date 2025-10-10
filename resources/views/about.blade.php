@@ -6,7 +6,7 @@
 <style>
     /* About Hero */
     .about-hero {
-        background: linear-gradient(135deg, rgba(102, 126, 234, 0.9) 0%, rgba(118, 75, 162, 0.9) 100%);
+        background: linear-gradient(135deg, rgba(85, 202, 179, 0.9) 0%, rgba(22, 131, 96, 0.9) 100%);
         color: white;
         padding: 4rem 0;
         text-align: center;
@@ -33,12 +33,22 @@
 
     .mission-content {
         display: grid;
-        grid-template-columns: 1fr 1fr;
+        grid-template-columns: 1.2fr 1fr; /* Adjusted for better card/image balance */
         gap: 3rem;
         max-width: 1200px;
         margin: 0 auto;
         padding: 0 20px;
-        align-items: center;
+        align-items: center; /* Ensures vertical alignment is centered */
+    }
+
+    /* NEW CARD STYLE */
+    .mission-card {
+        background: linear-gradient(135deg, #ffffff 0%, #f0f9f6 100%);
+        padding: 3rem;
+        border-radius: 15px;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+        border: 2px solid #55cab3;
+        border-left: 5px solid #55cab3; /* Accent color for the card */
     }
 
     .mission-text h2 {
@@ -54,9 +64,33 @@
         margin-bottom: 1rem;
     }
 
-    .mission-image {
+    /* NEW IMAGE CONTAINER STYLE */
+    .mission-image-container {
         text-align: center;
-        font-size: 8rem;
+        /* Ensures the image/placeholder scales neatly */
+    }
+
+    .mission-image-placeholder {
+        background: #e2e8f0;
+        width: 100%;
+        height: 300px;
+        border-radius: 10px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 1.5rem;
+        color: #4a5568;
+        font-weight: 600;
+        text-align: center;
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+    }
+
+    .mission-image {
+        width: 100%;
+        height: 400px;
+        object-fit: cover;
+        border-radius: 10px;
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
     }
 
     /* Stats Section */
@@ -216,7 +250,6 @@
     }
 </style>
 
-<!-- About Hero -->
 <section class="about-hero">
     <div class="container">
         <h1>About YogeshMela</h1>
@@ -224,22 +257,20 @@
     </div>
 </section>
 
-<!-- Mission Section -->
 <section class="mission-section">
     <div class="mission-content">
-        <div class="mission-text">
+        <div class="mission-card mission-text">
             <h2>Our Mission</h2>
-            <p>YogeshMela was founded with a simple yet powerful mission: to revolutionize the Qurbani animal marketplace in Bangladesh. We believe that finding the perfect animal for Qurbani should be as easy and trustworthy as possible.</p>
-            <p>Our platform connects verified sellers with buyers across the country, ensuring that every transaction is transparent, secure, and beneficial for all parties involved. We are committed to maintaining the highest standards of animal welfare, seller verification, and customer satisfaction.</p>
+            <p>**YogeshMela** was founded with a simple yet powerful mission: to revolutionize the Qurbani animal marketplace in Bangladesh. We believe that finding the perfect animal for Qurbani should be as easy and trustworthy as possible.</p>
+            <p>Our platform connects **verified sellers** with buyers across the country, ensuring that every transaction is transparent, secure, and beneficial for all parties involved. We are committed to maintaining the highest standards of **animal welfare**, seller verification, and customer satisfaction.</p>
             <p>Through our innovative online marketplace, we bring the traditional Qurbani process into the digital age while preserving the values and traditions that make this occasion special.</p>
         </div>
-        <div class="mission-image">
-            🐄
+        <div class="mission-image-container">
+            <img src="/image/Main_logo/Gemini_Generated_Image_gwxbthgwxbthgwxb.png" alt="YogeshMela Logo" class="mission-image">
         </div>
     </div>
 </section>
 
-<!-- Stats Section -->
 <section class="stats-section">
     <div class="stats-grid">
         <div class="stat-card">
@@ -261,7 +292,6 @@
     </div>
 </section>
 
-<!-- Values Section -->
 <section class="values-section">
     <div class="container">
         <h2>Our Values</h2>
@@ -300,7 +330,6 @@
     </div>
 </section>
 
-<!-- Team Section -->
 <section class="team-section">
     <div class="container">
         <h2>Meet Our Team</h2>

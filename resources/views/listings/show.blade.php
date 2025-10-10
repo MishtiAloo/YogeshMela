@@ -19,7 +19,7 @@
     }
 
     .breadcrumb a {
-        color: #667eea;
+        color: #14b8a6;
         text-decoration: none;
     }
 
@@ -45,14 +45,20 @@
     .main-image {
         width: 100%;
         height: 500px;
-        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        background: linear-gradient(135deg, #14b8a6 0%, #134e4a 100%);
         border-radius: 10px;
         display: flex;
         align-items: center;
         justify-content: center;
-        font-size: 10rem;
         margin-bottom: 1rem;
         position: relative;
+        overflow: hidden;
+    }
+
+    .main-image img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
     }
 
     .status-badge-large {
@@ -64,7 +70,7 @@
         border-radius: 30px;
         font-size: 1rem;
         font-weight: 600;
-        color: #667eea;
+        color: #14b8a6;
         box-shadow: 0 2px 10px rgba(0,0,0,0.2);
     }
 
@@ -91,7 +97,7 @@
     .price-tag {
         font-size: 2.5rem;
         font-weight: bold;
-        color: #667eea;
+        color: #14b8a6;
         margin-bottom: 1rem;
     }
 
@@ -127,7 +133,7 @@
     .btn-cart {
         width: 100%;
         padding: 1rem;
-        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        background: linear-gradient(135deg, #14b8a6 0%, #134e4a 100%);
         color: white;
         border: none;
         border-radius: 5px;
@@ -153,8 +159,8 @@
         width: 100%;
         padding: 1rem;
         background: white;
-        color: #667eea;
-        border: 2px solid #667eea;
+        color: #14b8a6;
+        border: 2px solid #14b8a6;
         border-radius: 5px;
         font-size: 1rem;
         font-weight: 600;
@@ -163,7 +169,7 @@
     }
 
     .btn-contact:hover {
-        background: #667eea;
+        background: #14b8a6;
         color: white;
     }
 
@@ -184,7 +190,7 @@
     .seller-avatar {
         width: 60px;
         height: 60px;
-        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        background: linear-gradient(135deg, #14b8a6 0%, #134e4a 100%);
         border-radius: 50%;
         display: flex;
         align-items: center;
@@ -244,7 +250,7 @@
 
     .animal-type-badge {
         display: inline-block;
-        background: #667eea;
+        background: #14b8a6;
         color: white;
         padding: 0.5rem 1rem;
         border-radius: 25px;
@@ -264,7 +270,7 @@
         background: #f7fafc;
         padding: 1.5rem;
         border-radius: 10px;
-        border-left: 4px solid #667eea;
+        border-left: 4px solid #14b8a6;
     }
 
     .spec-label {
@@ -331,7 +337,7 @@
     .rating-number {
         font-size: 3rem;
         font-weight: bold;
-        color: #667eea;
+        color: #14b8a6;
     }
 
     .rating-stars {
@@ -390,8 +396,8 @@
         width: 100%;
         padding: 1rem;
         background: white;
-        color: #667eea;
-        border: 2px dashed #667eea;
+        color: #14b8a6;
+        border: 2px dashed #14b8a6;
         border-radius: 5px;
         font-weight: 600;
         cursor: pointer;
@@ -437,11 +443,17 @@
 
     .related-image {
         height: 150px;
-        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        background: linear-gradient(135deg, #14b8a6 0%, #134e4a 100%);
         display: flex;
         align-items: center;
         justify-content: center;
-        font-size: 3rem;
+        overflow: hidden;
+    }
+
+    .related-image img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
     }
 
     .related-content {
@@ -457,7 +469,7 @@
     .related-price {
         font-size: 1.3rem;
         font-weight: bold;
-        color: #667eea;
+        color: #14b8a6;
         margin-bottom: 0.5rem;
     }
 
@@ -502,10 +514,55 @@
             <!-- Image Section -->
             <div class="image-section">
                 <div class="main-image">
-                    @if($listing->animal_type === 'cow') 🐄
-                    @elseif($listing->animal_type === 'goat') 🐐
-                    @elseif($listing->animal_type === 'sheep') 🐑
-                    @elseif($listing->animal_type === 'camel') 🐫
+                    @if($listing->animal_type === 'cow')
+                        @php
+                            $cowImages = [
+                                '/image/cera-Pn2XcR70E_g-unsplash.jpg',
+                                '/image/felicia-varzari-apE2kS6IYmI-unsplash.jpg',
+                                '/image/Gemini_Generated_Image_gqgdk7gqgdk7gqgd - Copy (2) - Copy.png',
+                                '/image/shalev-cohen-KTLEYHsy8CU-unsplash.jpg',
+                                '/image/veronica-white-uhMQmjSK6Iw-unsplash.jpg',
+                                '/image/wouter-r-S-UIYnAqME8-unsplash.jpg'
+                            ];
+                            $imageIndex = $listing->id % count($cowImages);
+                        @endphp
+                        <img src="{{ $cowImages[$imageIndex] }}" alt="Cow">
+                    @elseif($listing->animal_type === 'goat')
+                        @php
+                            $goatImages = [
+                                '/image/goats/50m-above-9chhynuIz28-unsplash.jpg',
+                                '/image/goats/jess-manthey-CiQOc9z4LbY-unsplash.jpg',
+                                '/image/goats/jorge-salvador-Cg_Di4KHxPE-unsplash.jpg',
+                                '/image/goats/mana5280-e8T_r8Q3kNg-unsplash.jpg',
+                                '/image/goats/muddy-toes-farm-llc-OJ3Zu5dtHVc-unsplash.jpg',
+                                '/image/goats/nataliya-melnychuk-2V8luifFK7w-unsplash.jpg',
+                                '/image/goats/robert-schwarz-ftlkViNWWKo-unsplash.jpg'
+                            ];
+                            $imageIndex = $listing->id % count($goatImages);
+                        @endphp
+                        <img src="{{ $goatImages[$imageIndex] }}" alt="Goat">
+                    @elseif($listing->animal_type === 'sheep')
+                        @php
+                            $sheepImages = [
+                                '/image/sheeps/jose-llamas-B_QP667GyPY-unsplash.jpg',
+                                '/image/sheeps/peter-hoogmoed-hKGWrHVj1H8-unsplash.jpg',
+                                '/image/sheeps/peter-hoogmoed-p-ARv5y0nKc-unsplash.jpg',
+                                '/image/sheeps/ronan-furuta-9xNiHyYuo-c-unsplash.jpg',
+                                '/image/sheeps/sophia-hopkins-CAAbbD7N9EE-unsplash.jpg'
+                            ];
+                            $imageIndex = $listing->id % count($sheepImages);
+                        @endphp
+                        <img src="{{ $sheepImages[$imageIndex] }}" alt="Sheep">
+                    @elseif($listing->animal_type === 'camel')
+                        @php
+                            $camelImages = [
+                                '/image/camels/maksim-golovko-EBPTkCcVeDE-unsplash.jpg',
+                                '/image/camels/maksim-golovko-nQvu3rMWkI0-unsplash.jpg',
+                                '/image/camels/wolfgang-hasselmann-3fuKZxFP2ow-unsplash.jpg'
+                            ];
+                            $imageIndex = $listing->id % count($camelImages);
+                        @endphp
+                        <img src="{{ $camelImages[$imageIndex] }}" alt="Camel">
                     @endif
                     <span class="status-badge-large {{ $listing->status === 'sold' ? 'sold' : '' }}">
                         {{ ucfirst($listing->status) }}
@@ -629,9 +686,22 @@
                     </span>
                 </div>
 
-                <button class="btn-cart" {{ $listing->status === 'sold' ? 'disabled' : '' }}>
-                    🛒 Add to Cart
-                </button>
+                @if(!auth()->check() || auth()->user()->role === 'buyer')
+                    <!-- Show Add to Cart button for guests and buyers only -->
+                    <form method="POST" action="{{ route('cart.add', $listing->id) }}" style="margin-bottom: 16px;">
+                        @csrf
+                        <button type="submit" class="btn-cart" {{ $listing->status === 'sold' ? 'disabled' : '' }}>
+                            🛒 Add to Cart
+                        </button>
+                    </form>
+                @else
+                    <!-- Show message for sellers and admins -->
+                    <div style="background-color: #fee2e2; border: 1px solid #ef4444; border-radius: 8px; padding: 12px; margin-bottom: 16px;">
+                        <p style="color: #991b1b; font-size: 14px; text-align: center; margin: 0;">
+                            Only buyers can add items to cart
+                        </p>
+                    </div>
+                @endif
                 <button class="btn-contact">📞 Contact Seller</button>
             </div>
 
@@ -679,10 +749,55 @@
             @foreach($relatedListings as $related)
             <a href="/listings/{{ $related->id }}" class="related-card">
                 <div class="related-image">
-                    @if($related->animal_type === 'cow') 🐄
-                    @elseif($related->animal_type === 'goat') 🐐
-                    @elseif($related->animal_type === 'sheep') 🐑
-                    @elseif($related->animal_type === 'camel') 🐫
+                    @if($related->animal_type === 'cow')
+                        @php
+                            $cowImages = [
+                                '/image/cera-Pn2XcR70E_g-unsplash.jpg',
+                                '/image/felicia-varzari-apE2kS6IYmI-unsplash.jpg',
+                                '/image/Gemini_Generated_Image_gqgdk7gqgdk7gqgd - Copy (2) - Copy.png',
+                                '/image/shalev-cohen-KTLEYHsy8CU-unsplash.jpg',
+                                '/image/veronica-white-uhMQmjSK6Iw-unsplash.jpg',
+                                '/image/wouter-r-S-UIYnAqME8-unsplash.jpg'
+                            ];
+                            $imageIndex = $related->id % count($cowImages);
+                        @endphp
+                        <img src="{{ $cowImages[$imageIndex] }}" alt="Cow">
+                    @elseif($related->animal_type === 'goat')
+                        @php
+                            $goatImages = [
+                                '/image/goats/50m-above-9chhynuIz28-unsplash.jpg',
+                                '/image/goats/jess-manthey-CiQOc9z4LbY-unsplash.jpg',
+                                '/image/goats/jorge-salvador-Cg_Di4KHxPE-unsplash.jpg',
+                                '/image/goats/mana5280-e8T_r8Q3kNg-unsplash.jpg',
+                                '/image/goats/muddy-toes-farm-llc-OJ3Zu5dtHVc-unsplash.jpg',
+                                '/image/goats/nataliya-melnychuk-2V8luifFK7w-unsplash.jpg',
+                                '/image/goats/robert-schwarz-ftlkViNWWKo-unsplash.jpg'
+                            ];
+                            $imageIndex = $related->id % count($goatImages);
+                        @endphp
+                        <img src="{{ $goatImages[$imageIndex] }}" alt="Goat">
+                    @elseif($related->animal_type === 'sheep')
+                        @php
+                            $sheepImages = [
+                                '/image/sheeps/jose-llamas-B_QP667GyPY-unsplash.jpg',
+                                '/image/sheeps/peter-hoogmoed-hKGWrHVj1H8-unsplash.jpg',
+                                '/image/sheeps/peter-hoogmoed-p-ARv5y0nKc-unsplash.jpg',
+                                '/image/sheeps/ronan-furuta-9xNiHyYuo-c-unsplash.jpg',
+                                '/image/sheeps/sophia-hopkins-CAAbbD7N9EE-unsplash.jpg'
+                            ];
+                            $imageIndex = $related->id % count($sheepImages);
+                        @endphp
+                        <img src="{{ $sheepImages[$imageIndex] }}" alt="Sheep">
+                    @elseif($related->animal_type === 'camel')
+                        @php
+                            $camelImages = [
+                                '/image/camels/maksim-golovko-EBPTkCcVeDE-unsplash.jpg',
+                                '/image/camels/maksim-golovko-nQvu3rMWkI0-unsplash.jpg',
+                                '/image/camels/wolfgang-hasselmann-3fuKZxFP2ow-unsplash.jpg'
+                            ];
+                            $imageIndex = $related->id % count($camelImages);
+                        @endphp
+                        <img src="{{ $camelImages[$imageIndex] }}" alt="Camel">
                     @endif
                 </div>
                 <div class="related-content">

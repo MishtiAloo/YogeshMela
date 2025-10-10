@@ -9,6 +9,7 @@ use App\Http\Controllers\UserController;
 use App\Http\Controllers\AboutController;
 use App\Http\Controllers\ContactController;
 use App\Http\Controllers\PromotionController;
+use App\Http\Controllers\CartController;
 
 use Illuminate\Foundation\Http\Middleware\VerifyCsrfToken;
 use Illuminate\Support\Facades\Route;
@@ -18,6 +19,26 @@ Route::get('/listings', [ListingController::class, 'index'])->name('listings.ind
 Route::get('/listings/{listing}', [ListingController::class, 'show'])->name('listings.show');
 Route::get('/about', [AboutController::class, 'index'])->name('about');
 Route::get('/contact', [ContactController::class, 'index'])->name('contact');
+
+// Cart routes (guest accessible)
+Route::get('/cart', [CartController::class, 'index'])->name('cart.index');
+Route::post('/cart/add/{listing}', [CartController::class, 'add'])->name('cart.add');
+Route::put('/cart/update/{cart}', [CartController::class, 'update'])->name('cart.update');
+Route::delete('/cart/remove/{cart}', [CartController::class, 'remove'])->name('cart.remove');
+Route::delete('/cart/clear', [CartController::class, 'clear'])->name('cart.clear');
+Route::get('/cart/count', [CartController::class, 'count'])->name('cart.count');
+
+// Checkout route (requires authentication and buyer role)
+Route::get('/checkout', function() {
+    return view('checkout.index');
+})->middleware(['auth', 'role:buyer'])->name('checkout.index');
+
+// Auth routes (login/logout)
+
+// Checkout route
+Route::get('/checkout', function () {
+    return view('checkout.index');
+})->name('checkout.index');
 
 // Auth routes (login/logout)
 Route::middleware(['web'])->group(function () {

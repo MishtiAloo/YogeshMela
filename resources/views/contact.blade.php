@@ -6,7 +6,7 @@
 <style>
     /* Contact Section */
     .contact-hero {
-        background: linear-gradient(135deg, rgba(102, 126, 234, 0.9) 0%, rgba(118, 75, 162, 0.9) 100%);
+        background: linear-gradient(135deg, rgba(85, 202, 179, 0.9) 0%, rgba(22, 131, 96, 0.9) 100%);
         color: white;
         padding: 4rem 0;
         text-align: center;
