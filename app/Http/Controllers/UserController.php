@@ -33,8 +33,7 @@ class UserController extends Controller
             'road_no'    => 'nullable|string|max:50',
             'thana'      => 'nullable|string|max:100',
             'postal_code'=> 'nullable|string|max:20',
-            'city'       => 'nullable|string|max:100',
-            'division'   => 'nullable|string|max:100',
+            'address'    => 'required|string|max:255',
             'role'       => 'required|in:buyer,seller,admin,butcher,delivery_man',
         ]);
 
@@ -70,8 +69,7 @@ class UserController extends Controller
             'road_no'    => 'nullable|string|max:50',
             'thana'      => 'nullable|string|max:100',
             'postal_code'=> 'nullable|string|max:20',
-            'city'       => 'nullable|string|max:100',
-            'division'   => 'nullable|string|max:100',
+            'address'    => 'nullable|string|max:255',
             'role'       => 'sometimes|in:buyer,seller,admin,butcher,delivery_man',
             'verified' => 'sometimes|in:pending,verified,unverified',
         ]);

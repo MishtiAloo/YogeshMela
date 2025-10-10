@@ -10,10 +10,19 @@ use App\Http\Controllers\AboutController;
 use App\Http\Controllers\ContactController;
 use App\Http\Controllers\PromotionController;
 use App\Http\Controllers\CartController;
-
+use App\Http\Controllers\ProfileController;
 use Illuminate\Foundation\Http\Middleware\VerifyCsrfToken;
 use Illuminate\Support\Facades\Route;
+Route::middleware(['auth'])->group(function () {
+    // GET /profile - Shows the user's profile details
+    Route::get('/profile', [ProfileController::class, 'show'])->name('profile.show');
 
+    // GET /profile/edit - Shows the form to edit profile
+    Route::get('/profile/edit', [ProfileController::class, 'edit'])->name('profile.edit');
+
+    // PUT/PATCH /profile - Submits the profile update form
+    Route::put('/profile', [ProfileController::class, 'update'])->name('profile.update');
+});
 Route::get('/', [HomeController::class, 'index'])->name('home');
 Route::get('/listings', [ListingController::class, 'index'])->name('listings.index');
 Route::get('/listings/{listing}', [ListingController::class, 'show'])->name('listings.show');

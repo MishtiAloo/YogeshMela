@@ -17,8 +17,9 @@ class UserFactory extends Factory
             'email'      => $this->faker->unique()->safeEmail(),
             'password'   => Hash::make('password'), // default hashed password
             'phone'      => $this->faker->optional()->phoneNumber(),
-            'city'       => $this->faker->city(),
-            'division'   => $this->faker->state(),
+            //'city'       => $this->faker->city(),
+            //'division'   => $this->faker->state(),
+            'address'    => fake()->address(), 
             'role'       => $this->faker->randomElement(['buyer','seller', 'butcher', 'delivery_man']), // leave 'admin' for manual insert
             'verified'   => $this->faker->randomElement(['unverified', 'pending', 'verified']),
         ];
