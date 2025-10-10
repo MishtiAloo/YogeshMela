@@ -71,7 +71,7 @@
 <div class="container">
     <h1>Add New Listing</h1>
 
-    <form action="{{ route('seller.listings.store') }}" method="POST">
+    <form action="{{ route('seller.listings.store') }}" method="POST" enctype="multipart/form-data">
         @csrf
 
         <div class="form-group">
@@ -113,6 +113,11 @@
         <div class="form-group">
             <label for="vaccination_info">Vaccination Info</label>
             <textarea name="vaccination_info" id="vaccination_info" class="form-control" rows="3" placeholder="Vaccination details (optional)"></textarea>
+        </div>
+
+        <div class="form-group">
+            <label for="image">Animal Image</label>
+            <input type="file" name="image" id="image" accept="image/*" required class="form-control">
         </div>
 
         <div class="form-group">
