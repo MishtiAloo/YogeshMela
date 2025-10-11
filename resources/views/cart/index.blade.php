@@ -37,8 +37,12 @@
                     <div style="padding: 24px; border-bottom: 1px solid #e5e7eb; display: flex; gap: 20px; align-items: start;">
                         <!-- Item Image -->
                         <div style="width: 120px; height: 120px; border-radius: 8px; overflow: hidden; flex-shrink: 0; background-color: #f3f4f6;">
-                            @if($item->listing->image_url)
-                                <img src="{{ asset($item->listing->image_url) }}" alt="{{ $item->listing->title }}" style="width: 100%; height: 100%; object-fit: cover;">
+                            @if($item->listing->image)
+                                @if(str_starts_with($item->listing->image, 'image/'))
+                                    <img src="{{ asset($item->listing->image) }}" alt="{{ ucfirst($item->listing->animal_type) }}" style="width: 100%; height: 100%; object-fit: cover;">
+                                @else
+                                    <img src="{{ asset('storage/' . $item->listing->image) }}" alt="{{ ucfirst($item->listing->animal_type) }}" style="width: 100%; height: 100%; object-fit: cover;">
+                                @endif
                             @else
                                 <div style="width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; color: #9ca3af;">
                                     <span style="font-size: 14px;">No Image</span>

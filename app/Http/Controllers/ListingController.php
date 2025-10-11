@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Listing;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Storage;
 
 class ListingController extends Controller
 {
@@ -73,13 +74,20 @@ class ListingController extends Controller
             'location'         => 'required|string',
             'vaccination_info' => 'nullable|string',
             'status'           => 'required|in:available,sold',
+            'image'            => 'required|image|mimes:jpeg,png,jpg,gif|max:2048',
         ]);
-    
+
+        // Handle image upload
+        if ($request->hasFile('image')) {
+            $imagePath = $request->file('image')->store('listings', 'public');
+            $validated['image'] = $imagePath;
+        }
+
         // Add the seller id (logged-in user)
         $validated['user_id'] = Auth::id();
-    
+
         $listing = Listing::create($validated);
-    
+
         return redirect()->route('seller.dashboard')
             ->with('success', 'Listing created successfully!');
     }
@@ -122,7 +130,18 @@ class ListingController extends Controller
             'location'         => 'sometimes|string',
             'vaccination_info' => 'nullable|string',
             'status'           => 'sometimes|in:available,sold',
+            'image'            => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
         ]);
+
+        // Handle image upload if provided
+        if ($request->hasFile('image')) {
+            // Delete old image if exists
+            if ($listing->image) {
+                Storage::disk('public')->delete($listing->image);
+            }
+            $imagePath = $request->file('image')->store('listings', 'public');
+            $validated['image'] = $imagePath;
+        }
 
         $listing->update($validated);
 

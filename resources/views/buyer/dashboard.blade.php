@@ -187,8 +187,16 @@
                             @foreach($cartItems->take(3) as $item)
                             <div style="display: flex; gap: 12px; margin-bottom: 12px; padding-bottom: 12px; border-bottom: 1px solid #f3f4f6;">
                                 <div style="width: 60px; height: 60px; border-radius: 8px; overflow: hidden; background-color: #f3f4f6; flex-shrink: 0;">
-                                    @if($item->listing->image_url)
-                                        <img src="{{ asset($item->listing->image_url) }}" alt="{{ $item->listing->title }}" style="width: 100%; height: 100%; object-fit: cover;">
+                                    @if($item->listing->image)
+                                        @if(str_starts_with($item->listing->image, 'image/'))
+                                            <img src="{{ asset($item->listing->image) }}" alt="{{ ucfirst($item->listing->animal_type) }}" style="width: 100%; height: 100%; object-fit: cover;">
+                                        @else
+                                            <img src="{{ asset('storage/' . $item->listing->image) }}" alt="{{ ucfirst($item->listing->animal_type) }}" style="width: 100%; height: 100%; object-fit: cover;">
+                                        @endif
+                                    @else
+                                        <div style="width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; color: #9ca3af;">
+                                            <span style="font-size: 12px;">No Image</span>
+                                        </div>
                                     @endif
                                 </div>
                                 <div style="flex: 1;">
@@ -285,8 +293,12 @@
                 @foreach($recommendedListings as $listing)
                 <a href="{{ route('listings.show', $listing->id) }}" style="background: white; border-radius: 12px; overflow: hidden; box-shadow: 0 1px 3px rgba(0,0,0,0.1); text-decoration: none; transition: transform 0.3s, box-shadow 0.3s;">
                     <div style="height: 200px; background-color: #f3f4f6; overflow: hidden;">
-                        @if($listing->image_url)
-                            <img src="{{ asset($listing->image_url) }}" alt="{{ $listing->title }}" style="width: 100%; height: 100%; object-fit: cover;">
+                        @if($listing->image)
+                            @if(str_starts_with($listing->image, 'image/'))
+                                <img src="{{ asset($listing->image) }}" alt="{{ ucfirst($listing->animal_type) }}" style="width: 100%; height: 100%; object-fit: cover;">
+                            @else
+                                <img src="{{ asset('storage/' . $listing->image) }}" alt="{{ ucfirst($listing->animal_type) }}" style="width: 100%; height: 100%; object-fit: cover;">
+                            @endif
                         @else
                             <div style="width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; color: #9ca3af;">
                                 <span>No Image</span>
