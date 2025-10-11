@@ -153,6 +153,6 @@ class ListingController extends Controller
     public function destroy(Listing $listing)
     {
         $listing->delete();
-        return response()->json(['message' => 'Listing deleted']);
+        return redirect()->route('seller.dashboard')->with('success', 'Listing deleted successfully!');
     }
 }
