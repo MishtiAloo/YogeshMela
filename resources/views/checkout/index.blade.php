@@ -11,20 +11,25 @@
 
         <div style="display: grid; grid-template-columns: 2fr 1fr; gap: 24px;">
             <!-- Checkout Form -->
-            <div>
-                <!-- Delivery Information -->
+            <form id="checkout-form" method="POST" action="{{ route('checkout.placeOrder') }}">
+                @csrf
+                <input type="hidden" name="butcher_service" id="butcher_service_input" value="0">
+                <input type="hidden" name="delivery_service" id="delivery_service_input" value="0">
+                
+                <div>
+                <!-- Delivery Information (display only - not submitted) -->
                 <div style="background-color: white; border-radius: 12px; box-shadow: 0 1px 3px rgba(0,0,0,0.1); padding: 24px; margin-bottom: 24px;">
                     <h2 style="font-size: 20px; font-weight: bold; color: #1f2937; margin-bottom: 20px;">Delivery Information</h2>
                     
-                    <form>
+                    <div>
                         <div style="margin-bottom: 16px;">
                             <label style="display: block; color: #1f2937; font-weight: 500; margin-bottom: 6px;">Full Name</label>
-                            <input type="text" name="name" value="{{ auth()->user()->name ?? '' }}" style="width: 100%; padding: 10px 14px; border: 1px solid #d1d5db; border-radius: 8px; font-size: 14px; color: #1f2937;">
+                            <input type="text" value="{{ auth()->user()->name ?? '' }}" readonly style="width: 100%; padding: 10px 14px; border: 1px solid #d1d5db; border-radius: 8px; font-size: 14px; color: #1f2937; background-color: #f9fafb;">
                         </div>
 
                         <div style="margin-bottom: 16px;">
                             <label style="display: block; color: #1f2937; font-weight: 500; margin-bottom: 6px;">Phone Number</label>
-                            <input type="tel" name="phone" value="{{ auth()->user()->phone ?? '' }}" style="width: 100%; padding: 10px 14px; border: 1px solid #d1d5db; border-radius: 8px; font-size: 14px; color: #1f2937;">
+                            <input type="tel" value="{{ auth()->user()->phone ?? '' }}" readonly style="width: 100%; padding: 10px 14px; border: 1px solid #d1d5db; border-radius: 8px; font-size: 14px; color: #1f2937; background-color: #f9fafb;">
                         </div>
 
                         <div style="margin-bottom: 16px;">
@@ -160,8 +165,9 @@
                         <span style="font-size: 24px; font-weight: bold; color: #f97316;" id="total-amount">৳{{ number_format($subtotal, 2) }}</span>
                     </div>
 
-                    <button style="width: 100%; padding: 14px 24px; background-color: #14b8a6; color: white; border: none; border-radius: 8px; font-weight: 600; font-size: 16px; cursor: pointer; transition: background-color 0.3s;">
-                        Place Order
+                    <button type="submit" id="place-order-btn" form="checkout-form" style="width: 100%; padding: 14px 24px; background-color: #14b8a6; color: white; border: none; border-radius: 8px; font-weight: 600; font-size: 16px; cursor: pointer; transition: background-color 0.3s;">
+                        <span id="btn-text">Place Order</span>
+                        <span id="btn-loading" style="display: none;">Processing...</span>
                     </button>
 
                     <a href="{{ route('cart.index') }}" style="display: block; width: 100%; padding: 14px 24px; background-color: white; color: #14b8a6; text-align: center; border-radius: 8px; font-weight: 600; text-decoration: none; border: 2px solid #14b8a6; margin-top: 12px; transition: background-color 0.3s;">
@@ -195,12 +201,18 @@
         const butcherService = document.getElementById('butcher_service');
         if (butcherService && butcherService.checked) {
             additionalServices += parseFloat(butcherService.dataset.price);
+            document.getElementById('butcher_service_input').value = '1';
+        } else {
+            document.getElementById('butcher_service_input').value = '0';
         }
         
         // Check if home delivery is selected
         const homeDelivery = document.getElementById('home_delivery');
         if (homeDelivery && homeDelivery.checked) {
             additionalServices += parseFloat(homeDelivery.dataset.price);
+            document.getElementById('delivery_service_input').value = '1';
+        } else {
+            document.getElementById('delivery_service_input').value = '0';
         }
         
         // Calculate total
@@ -211,9 +223,27 @@
         document.getElementById('total-amount').textContent = '৳' + total.toFixed(2);
     }
     
-    // Initialize on page load
+    // Handle form submission
     document.addEventListener('DOMContentLoaded', function() {
         updateTotal();
+        
+        // Update hidden fields when form is submitted
+        const form = document.getElementById('checkout-form');
+        if (form) {
+            form.addEventListener('submit', function(e) {
+                // Update hidden fields one more time before submission
+                updateTotal();
+                
+                // Show loading state
+                const btn = document.getElementById('place-order-btn');
+                const btnText = document.getElementById('btn-text');
+                const btnLoading = document.getElementById('btn-loading');
+                
+                btn.disabled = true;
+                btnText.style.display = 'none';
+                btnLoading.style.display = 'inline';
+            });
+        }
     });
 </script>
 
