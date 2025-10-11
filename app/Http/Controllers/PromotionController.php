@@ -49,13 +49,22 @@ class PromotionController extends Controller
 
         $promotion->update($validated);
 
-        return response()->json($promotion);
+        if ($request->expectsJson()) {
+            return response()->json($promotion);
+        } else {
+            $message = $validated['status'] === 'active' ? 'Promotion accepted successfully.' : 'Promotion updated successfully.';
+            return redirect()->route('admin.dashboard')->with('success', $message);
+        }
     }
 
-    public function destroy(Promotion $promotion)
+    public function destroy(Request $request, Promotion $promotion)
     {
         $promotion->delete();
-        return response()->json(['message' => 'Promotion deleted']);
+        if ($request->expectsJson()) {
+            return response()->json(['message' => 'Promotion deleted']);
+        } else {
+            return redirect()->route('admin.dashboard')->with('success', 'Promotion deleted successfully.');
+        }
     }
 
     public function showAttachForm(Listing $listing)
