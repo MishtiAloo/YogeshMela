@@ -28,10 +28,10 @@ class BuyerDashboardController extends Controller
         // Calculate statistics
         $stats = [
             'total_orders' => $orders->count(),
-            'pending_orders' => $orders->where('status', 'pending')->count(),
-            'completed_orders' => $orders->where('status', 'completed')->count(),
-            'cancelled_orders' => $orders->where('status', 'cancelled')->count(),
-            'total_spent' => $orders->where('status', '!=', 'cancelled')->sum('total_price'),
+            'pending_orders' => $orders->where('status', 'confirmed')->count(),
+            'completed_orders' => $orders->where('status', 'delivered')->count(),
+            'cancelled_orders' => 0, // No cancelled status in current schema
+            'total_spent' => $orders->sum('total_price'),
             'cart_items' => $cartItems->count(),
             'cart_total' => $cartItems->sum('subtotal'),
         ];

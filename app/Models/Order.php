@@ -10,7 +10,7 @@ class Order extends Model
     use HasFactory;
 
     protected $fillable = [
-        'buyer_id','listing_id','quantity','butcher_service','delivery_service','status'
+        'buyer_id','listing_id','quantity','total_price','additional_services_fee','butcher_service','delivery_service','delivery_address','phone','payment_method','notes','status'
     ];
 
     public function buyer() {

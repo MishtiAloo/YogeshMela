@@ -101,6 +101,12 @@
 <div class="dashboard-container">
     <h1>Admin Dashboard</h1>
 
+    @if(session('success'))
+        <div class="alert alert-success" style="padding: 1rem; background-color: #d4edda; color: #155724; border: 1px solid #c3e6cb; border-radius: 5px; margin-bottom: 1rem;">
+            {{ session('success') }}
+        </div>
+    @endif
+
     <!-- Sellers Section -->
     <div class="section">
         <h2>Sellers</h2>

@@ -11,6 +11,7 @@ use App\Http\Controllers\ContactController;
 use App\Http\Controllers\PromotionController;
 use App\Http\Controllers\CartController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\OrderController;
 use Illuminate\Foundation\Http\Middleware\VerifyCsrfToken;
 use Illuminate\Support\Facades\Route;
 Route::middleware(['auth'])->group(function () {
@@ -42,12 +43,10 @@ Route::get('/checkout', function() {
     return view('checkout.index');
 })->middleware(['auth', 'role:buyer'])->name('checkout.index');
 
-// Auth routes (login/logout)
-
-// Checkout route
-Route::get('/checkout', function () {
-    return view('checkout.index');
-})->name('checkout.index');
+// Place order route
+Route::post('/orders', [OrderController::class, 'store'])
+    ->middleware(['auth', 'role:buyer'])
+    ->name('checkout.placeOrder');
 
 // Auth routes (login/logout)
 Route::middleware(['web'])->group(function () {
@@ -116,6 +115,10 @@ Route::post('/seller/promotions/{promotion}/end', [PromotionController::class, '
 Route::post('/seller/request-verification', [SellerDashboardController::class, 'requestVerification'])
     ->middleware(['auth', 'role:seller'])
     ->name('seller.request.verification');
+
+Route::post('/seller/orders/{order}/deliver', [SellerDashboardController::class, 'markDelivered'])
+    ->middleware(['auth', 'role:seller'])
+    ->name('seller.orders.deliver');
 
 Route::get('/users/{user}/trackorder', [UserController::class, 'trackOrder'])
     ->middleware(['auth'])

@@ -11,20 +11,25 @@
 
         <div style="display: grid; grid-template-columns: 2fr 1fr; gap: 24px;">
             <!-- Checkout Form -->
-            <div>
-                <!-- Delivery Information -->
+            <form id="checkout-form" method="POST" action="{{ route('checkout.placeOrder') }}">
+                @csrf
+                <input type="hidden" name="butcher_service" id="butcher_service_input" value="0">
+                <input type="hidden" name="delivery_service" id="delivery_service_input" value="0">
+                
+                <div>
+                <!-- Delivery Information (display only - not submitted) -->
                 <div style="background-color: white; border-radius: 12px; box-shadow: 0 1px 3px rgba(0,0,0,0.1); padding: 24px; margin-bottom: 24px;">
                     <h2 style="font-size: 20px; font-weight: bold; color: #1f2937; margin-bottom: 20px;">Delivery Information</h2>
                     
-                    <form>
+                    <div>
                         <div style="margin-bottom: 16px;">
                             <label style="display: block; color: #1f2937; font-weight: 500; margin-bottom: 6px;">Full Name</label>
-                            <input type="text" name="name" value="{{ auth()->user()->name ?? '' }}" style="width: 100%; padding: 10px 14px; border: 1px solid #d1d5db; border-radius: 8px; font-size: 14px; color: #1f2937;">
+                            <input type="text" value="{{ auth()->user()->name ?? '' }}" readonly style="width: 100%; padding: 10px 14px; border: 1px solid #d1d5db; border-radius: 8px; font-size: 14px; color: #1f2937; background-color: #f9fafb;">
                         </div>
 
                         <div style="margin-bottom: 16px;">
                             <label style="display: block; color: #1f2937; font-weight: 500; margin-bottom: 6px;">Phone Number</label>
-                            <input type="tel" name="phone" value="{{ auth()->user()->phone ?? '' }}" style="width: 100%; padding: 10px 14px; border: 1px solid #d1d5db; border-radius: 8px; font-size: 14px; color: #1f2937;">
+                            <input type="tel" value="{{ auth()->user()->phone ?? '' }}" readonly style="width: 100%; padding: 10px 14px; border: 1px solid #d1d5db; border-radius: 8px; font-size: 14px; color: #1f2937; background-color: #f9fafb;">
                         </div>
 
                         <div style="margin-bottom: 16px;">
@@ -100,7 +105,7 @@
                     
                     <div style="display: grid; gap: 12px;">
                         <label style="display: flex; align-items: center; padding: 16px; border: 2px solid #e5e7eb; border-radius: 8px; cursor: pointer;">
-                            <input type="checkbox" name="butcher_service" style="margin-right: 12px; width: 18px; height: 18px;">
+                            <input type="checkbox" name="butcher_service" id="butcher_service" data-price="500" onchange="updateTotal()" style="margin-right: 12px; width: 18px; height: 18px;">
                             <div style="flex: 1;">
                                 <div style="font-weight: 600; color: #1f2937;">Butcher Service</div>
                                 <div style="font-size: 14px; color: #6b7280;">Professional butchering at your location</div>
@@ -109,7 +114,7 @@
                         </label>
 
                         <label style="display: flex; align-items: center; padding: 16px; border: 2px solid #e5e7eb; border-radius: 8px; cursor: pointer;">
-                            <input type="checkbox" name="home_delivery" style="margin-right: 12px; width: 18px; height: 18px;">
+                            <input type="checkbox" name="home_delivery" id="home_delivery" data-price="300" onchange="updateTotal()" style="margin-right: 12px; width: 18px; height: 18px;">
                             <div style="flex: 1;">
                                 <div style="font-weight: 600; color: #1f2937;">Home Delivery</div>
                                 <div style="font-size: 14px; color: #6b7280;">Delivery to your doorstep</div>
@@ -147,25 +152,22 @@
                     <div style="border-bottom: 1px solid #e5e7eb; padding-bottom: 16px; margin-bottom: 16px;">
                         <div style="display: flex; justify-content: space-between; margin-bottom: 12px;">
                             <span style="color: #6b7280; font-size: 14px;">Subtotal</span>
-                            <span style="color: #1f2937; font-weight: 500;">৳{{ number_format($subtotal, 2) }}</span>
+                            <span style="color: #1f2937; font-weight: 500;" id="subtotal-display">৳{{ number_format($subtotal, 2) }}</span>
                         </div>
-                        <div style="display: flex; justify-content: space-between; margin-bottom: 12px;">
-                            <span style="color: #6b7280; font-size: 14px;">Delivery Fee</span>
-                            <span style="color: #1f2937; font-weight: 500;">৳300</span>
-                        </div>
-                        <div style="display: flex; justify-content: space-between; margin-bottom: 12px;">
+                        <div style="display: flex; justify-content: space-between; margin-bottom: 12px;" id="additional-services-row">
                             <span style="color: #6b7280; font-size: 14px;">Additional Services</span>
-                            <span style="color: #1f2937; font-weight: 500;">৳0</span>
+                            <span style="color: #1f2937; font-weight: 500;" id="additional-services-amount">৳0.00</span>
                         </div>
                     </div>
 
                     <div style="display: flex; justify-content: space-between; margin-bottom: 24px;">
                         <span style="font-size: 18px; font-weight: bold; color: #1f2937;">Total</span>
-                        <span style="font-size: 24px; font-weight: bold; color: #f97316;">৳{{ number_format($subtotal + 300, 2) }}</span>
+                        <span style="font-size: 24px; font-weight: bold; color: #f97316;" id="total-amount">৳{{ number_format($subtotal, 2) }}</span>
                     </div>
 
-                    <button style="width: 100%; padding: 14px 24px; background-color: #14b8a6; color: white; border: none; border-radius: 8px; font-weight: 600; font-size: 16px; cursor: pointer; transition: background-color 0.3s;">
-                        Place Order
+                    <button type="submit" id="place-order-btn" form="checkout-form" style="width: 100%; padding: 14px 24px; background-color: #14b8a6; color: white; border: none; border-radius: 8px; font-weight: 600; font-size: 16px; cursor: pointer; transition: background-color 0.3s;">
+                        <span id="btn-text">Place Order</span>
+                        <span id="btn-loading" style="display: none;">Processing...</span>
                     </button>
 
                     <a href="{{ route('cart.index') }}" style="display: block; width: 100%; padding: 14px 24px; background-color: white; color: #14b8a6; text-align: center; border-radius: 8px; font-weight: 600; text-decoration: none; border: 2px solid #14b8a6; margin-top: 12px; transition: background-color 0.3s;">
@@ -186,6 +188,64 @@
         </div>
     </div>
 </div>
+
+<script>
+    // Store the subtotal value
+    const subtotal = {{ $subtotal }};
+
+    // Function to update the total amount
+    function updateTotal() {
+        let additionalServices = 0;
+        
+        // Check if butcher service is selected
+        const butcherService = document.getElementById('butcher_service');
+        if (butcherService && butcherService.checked) {
+            additionalServices += parseFloat(butcherService.dataset.price);
+            document.getElementById('butcher_service_input').value = '1';
+        } else {
+            document.getElementById('butcher_service_input').value = '0';
+        }
+        
+        // Check if home delivery is selected
+        const homeDelivery = document.getElementById('home_delivery');
+        if (homeDelivery && homeDelivery.checked) {
+            additionalServices += parseFloat(homeDelivery.dataset.price);
+            document.getElementById('delivery_service_input').value = '1';
+        } else {
+            document.getElementById('delivery_service_input').value = '0';
+        }
+        
+        // Calculate total
+        const total = subtotal + additionalServices;
+        
+        // Update the displays
+        document.getElementById('additional-services-amount').textContent = '৳' + additionalServices.toFixed(2);
+        document.getElementById('total-amount').textContent = '৳' + total.toFixed(2);
+    }
+    
+    // Handle form submission
+    document.addEventListener('DOMContentLoaded', function() {
+        updateTotal();
+        
+        // Update hidden fields when form is submitted
+        const form = document.getElementById('checkout-form');
+        if (form) {
+            form.addEventListener('submit', function(e) {
+                // Update hidden fields one more time before submission
+                updateTotal();
+                
+                // Show loading state
+                const btn = document.getElementById('place-order-btn');
+                const btnText = document.getElementById('btn-text');
+                const btnLoading = document.getElementById('btn-loading');
+                
+                btn.disabled = true;
+                btnText.style.display = 'none';
+                btnLoading.style.display = 'inline';
+            });
+        }
+    });
+</script>
 
 <style>
     /* Radio button hover effect */

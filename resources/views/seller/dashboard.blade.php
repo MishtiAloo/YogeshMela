@@ -124,7 +124,19 @@
                     <td>{{ $listing->weight }}</td>
                     <td>{{ number_format($listing->price, 2) }}</td>
                     <td>{{ $listing->location }}</td>
-                    <td>{{ ucfirst($listing->status) }}</td>
+                    <td>{{ ucfirst($listing->status) }}
+                        @if(isset($orders[$listing->id]))
+                            @foreach($orders[$listing->id] as $order)
+                                @if($order->status === 'confirmed')
+                                    <br>
+                                    <form action="{{ route('seller.orders.deliver', $order->id) }}" method="POST" style="display: inline; margin-top: 0.5rem;">
+                                        @csrf
+                                        <button type="submit" class="btn btn-add" style="font-size: 0.8em; padding: 0.3rem 0.6rem;">confirm Delivery</button>
+                                    </form>
+                                @endif
+                            @endforeach
+                        @endif
+                    </td>
                     <td>
                         @if(isset($promotions[$listing->id]))
                             @php $promo = $promotions[$listing->id]; @endphp

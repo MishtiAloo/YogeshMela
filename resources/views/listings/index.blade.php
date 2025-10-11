@@ -38,6 +38,8 @@
         height: fit-content;
         position: sticky;
         top: 20px;
+        max-height: 100vh;
+        overflow-y: auto;
     }
 
     .filters-sidebar h3 {
