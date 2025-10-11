@@ -117,6 +117,10 @@ Route::post('/seller/request-verification', [SellerDashboardController::class, '
     ->middleware(['auth', 'role:seller'])
     ->name('seller.request.verification');
 
+Route::post('/seller/orders/{order}/deliver', [SellerDashboardController::class, 'markDelivered'])
+    ->middleware(['auth', 'role:seller'])
+    ->name('seller.orders.deliver');
+
 Route::get('/users/{user}/trackorder', [UserController::class, 'trackOrder'])
     ->middleware(['auth'])
     ->name('users.trackorder');

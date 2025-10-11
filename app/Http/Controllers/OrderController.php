@@ -20,7 +20,7 @@ class OrderController extends Controller
             'quantity'        => 'required|integer|min:1',
             'butcher_service' => 'required|boolean',
             'delivery_service'=> 'required|boolean',
-            'status'          => 'required|in:confirmed,pending,cancelled',
+            'status'          => 'required|in:confirmed,delivered',
         ]);
 
         $order = Order::create($validated);
@@ -39,7 +39,7 @@ class OrderController extends Controller
             'quantity'        => 'sometimes|integer|min:1',
             'butcher_service' => 'sometimes|boolean',
             'delivery_service'=> 'sometimes|boolean',
-            'status'          => 'sometimes|in:confirmed,pending,cancelled',
+            'status'          => 'sometimes|in:confirmed,delivered',
         ]);
 
         $order->update($validated);
