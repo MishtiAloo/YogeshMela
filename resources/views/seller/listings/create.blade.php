@@ -66,10 +66,57 @@
     .btn-secondary:hover {
         background: #cbd5e0;
     }
+
+    .alert {
+        padding: 1rem;
+        margin-bottom: 1rem;
+        border-radius: 5px;
+    }
+
+    .alert-danger {
+        background-color: #fee2e2;
+        border: 1px solid #ef4444;
+        color: #991b1b;
+    }
+
+    .alert-success {
+        background-color: #d1fae5;
+        border: 1px solid #10b981;
+        color: #065f46;
+    }
+
+    .error-message {
+        color: #dc2626;
+        font-size: 0.875rem;
+        margin-top: 0.25rem;
+    }
 </style>
 
 <div class="container">
     <h1>Add New Listing</h1>
+
+    @if ($errors->any())
+        <div class="alert alert-danger">
+            <strong>There were some errors with your submission:</strong>
+            <ul style="margin: 0.5rem 0 0 0; padding-left: 1.5rem;">
+                @foreach ($errors->all() as $error)
+                    <li>{{ $error }}</li>
+                @endforeach
+            </ul>
+        </div>
+    @endif
+
+    @if (session('success'))
+        <div class="alert alert-success">
+            {{ session('success') }}
+        </div>
+    @endif
+
+    @if (session('error'))
+        <div class="alert alert-danger">
+            {{ session('error') }}
+        </div>
+    @endif
 
     <form action="{{ route('seller.listings.store') }}" method="POST" enctype="multipart/form-data">
         @csrf
@@ -78,54 +125,81 @@
             <label for="animal_type">Animal Type</label>
             <select name="animal_type" id="animal_type" required class="form-control">
                 <option value="">Select Type</option>
-                <option value="cow">Cow</option>
-                <option value="goat">Goat</option>
-                <option value="sheep">Sheep</option>
-                <option value="camel">Camel</option>
+                <option value="cow" {{ old('animal_type') == 'cow' ? 'selected' : '' }}>Cow</option>
+                <option value="goat" {{ old('animal_type') == 'goat' ? 'selected' : '' }}>Goat</option>
+                <option value="sheep" {{ old('animal_type') == 'sheep' ? 'selected' : '' }}>Sheep</option>
+                <option value="camel" {{ old('animal_type') == 'camel' ? 'selected' : '' }}>Camel</option>
             </select>
+            @error('animal_type')
+                <div class="error-message">{{ $message }}</div>
+            @enderror
         </div>
 
         <div class="form-group">
             <label for="breed">Breed</label>
-            <input type="text" name="breed" id="breed" class="form-control" placeholder="Breed (optional)">
+            <input type="text" name="breed" id="breed" class="form-control" placeholder="Breed (optional)" value="{{ old('breed') }}">
+            @error('breed')
+                <div class="error-message">{{ $message }}</div>
+            @enderror
         </div>
 
         <div class="form-group">
             <label for="age">Age (months)</label>
-            <input type="number" name="age" id="age" min="1" required class="form-control">
+            <input type="number" name="age" id="age" min="1" required class="form-control" value="{{ old('age') }}">
+            @error('age')
+                <div class="error-message">{{ $message }}</div>
+            @enderror
         </div>
 
         <div class="form-group">
             <label for="weight">Weight (kg)</label>
-            <input type="number" name="weight" id="weight" min="1" step="0.1" required class="form-control">
+            <input type="number" name="weight" id="weight" min="1" step="0.1" required class="form-control" value="{{ old('weight') }}">
+            @error('weight')
+                <div class="error-message">{{ $message }}</div>
+            @enderror
         </div>
 
         <div class="form-group">
             <label for="price">Price (৳)</label>
-            <input type="number" name="price" id="price" min="1" step="0.01" required class="form-control">
+            <input type="number" name="price" id="price" min="1" step="0.01" required class="form-control" value="{{ old('price') }}">
+            @error('price')
+                <div class="error-message">{{ $message }}</div>
+            @enderror
         </div>
 
         <div class="form-group">
             <label for="location">Location</label>
-            <input type="text" name="location" id="location" required class="form-control">
+            <input type="text" name="location" id="location" required class="form-control" value="{{ old('location') }}">
+            @error('location')
+                <div class="error-message">{{ $message }}</div>
+            @enderror
         </div>
 
         <div class="form-group">
             <label for="vaccination_info">Vaccination Info</label>
-            <textarea name="vaccination_info" id="vaccination_info" class="form-control" rows="3" placeholder="Vaccination details (optional)"></textarea>
+            <textarea name="vaccination_info" id="vaccination_info" class="form-control" rows="3" placeholder="Vaccination details (optional)">{{ old('vaccination_info') }}</textarea>
+            @error('vaccination_info')
+                <div class="error-message">{{ $message }}</div>
+            @enderror
         </div>
 
         <div class="form-group">
             <label for="image">Animal Image</label>
             <input type="file" name="image" id="image" accept="image/*" required class="form-control">
+            @error('image')
+                <div class="error-message">{{ $message }}</div>
+            @enderror
         </div>
 
         <div class="form-group">
             <label for="status">Status</label>
             <select name="status" id="status" required class="form-control">
-                <option value="available">Available</option>
-                <option value="sold">Sold</option>
+                <option value="available" {{ old('status') == 'available' ? 'selected' : '' }}>Available</option>
+                <option value="sold" {{ old('status') == 'sold' ? 'selected' : '' }}>Sold</option>
             </select>
+            @error('status')
+                <div class="error-message">{{ $message }}</div>
+            @enderror
         </div>
 
         <button type="submit" class="btn btn-primary">Add Listing</button>
