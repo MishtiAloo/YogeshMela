@@ -100,7 +100,7 @@
                     
                     <div style="display: grid; gap: 12px;">
                         <label style="display: flex; align-items: center; padding: 16px; border: 2px solid #e5e7eb; border-radius: 8px; cursor: pointer;">
-                            <input type="checkbox" name="butcher_service" style="margin-right: 12px; width: 18px; height: 18px;">
+                            <input type="checkbox" name="butcher_service" id="butcher_service" data-price="500" onchange="updateTotal()" style="margin-right: 12px; width: 18px; height: 18px;">
                             <div style="flex: 1;">
                                 <div style="font-weight: 600; color: #1f2937;">Butcher Service</div>
                                 <div style="font-size: 14px; color: #6b7280;">Professional butchering at your location</div>
@@ -109,7 +109,7 @@
                         </label>
 
                         <label style="display: flex; align-items: center; padding: 16px; border: 2px solid #e5e7eb; border-radius: 8px; cursor: pointer;">
-                            <input type="checkbox" name="home_delivery" style="margin-right: 12px; width: 18px; height: 18px;">
+                            <input type="checkbox" name="home_delivery" id="home_delivery" data-price="300" onchange="updateTotal()" style="margin-right: 12px; width: 18px; height: 18px;">
                             <div style="flex: 1;">
                                 <div style="font-weight: 600; color: #1f2937;">Home Delivery</div>
                                 <div style="font-size: 14px; color: #6b7280;">Delivery to your doorstep</div>
@@ -147,21 +147,17 @@
                     <div style="border-bottom: 1px solid #e5e7eb; padding-bottom: 16px; margin-bottom: 16px;">
                         <div style="display: flex; justify-content: space-between; margin-bottom: 12px;">
                             <span style="color: #6b7280; font-size: 14px;">Subtotal</span>
-                            <span style="color: #1f2937; font-weight: 500;">৳{{ number_format($subtotal, 2) }}</span>
+                            <span style="color: #1f2937; font-weight: 500;" id="subtotal-display">৳{{ number_format($subtotal, 2) }}</span>
                         </div>
-                        <div style="display: flex; justify-content: space-between; margin-bottom: 12px;">
-                            <span style="color: #6b7280; font-size: 14px;">Delivery Fee</span>
-                            <span style="color: #1f2937; font-weight: 500;">৳300</span>
-                        </div>
-                        <div style="display: flex; justify-content: space-between; margin-bottom: 12px;">
+                        <div style="display: flex; justify-content: space-between; margin-bottom: 12px;" id="additional-services-row">
                             <span style="color: #6b7280; font-size: 14px;">Additional Services</span>
-                            <span style="color: #1f2937; font-weight: 500;">৳0</span>
+                            <span style="color: #1f2937; font-weight: 500;" id="additional-services-amount">৳0.00</span>
                         </div>
                     </div>
 
                     <div style="display: flex; justify-content: space-between; margin-bottom: 24px;">
                         <span style="font-size: 18px; font-weight: bold; color: #1f2937;">Total</span>
-                        <span style="font-size: 24px; font-weight: bold; color: #f97316;">৳{{ number_format($subtotal + 300, 2) }}</span>
+                        <span style="font-size: 24px; font-weight: bold; color: #f97316;" id="total-amount">৳{{ number_format($subtotal, 2) }}</span>
                     </div>
 
                     <button style="width: 100%; padding: 14px 24px; background-color: #14b8a6; color: white; border: none; border-radius: 8px; font-weight: 600; font-size: 16px; cursor: pointer; transition: background-color 0.3s;">
@@ -186,6 +182,40 @@
         </div>
     </div>
 </div>
+
+<script>
+    // Store the subtotal value
+    const subtotal = {{ $subtotal }};
+
+    // Function to update the total amount
+    function updateTotal() {
+        let additionalServices = 0;
+        
+        // Check if butcher service is selected
+        const butcherService = document.getElementById('butcher_service');
+        if (butcherService && butcherService.checked) {
+            additionalServices += parseFloat(butcherService.dataset.price);
+        }
+        
+        // Check if home delivery is selected
+        const homeDelivery = document.getElementById('home_delivery');
+        if (homeDelivery && homeDelivery.checked) {
+            additionalServices += parseFloat(homeDelivery.dataset.price);
+        }
+        
+        // Calculate total
+        const total = subtotal + additionalServices;
+        
+        // Update the displays
+        document.getElementById('additional-services-amount').textContent = '৳' + additionalServices.toFixed(2);
+        document.getElementById('total-amount').textContent = '৳' + total.toFixed(2);
+    }
+    
+    // Initialize on page load
+    document.addEventListener('DOMContentLoaded', function() {
+        updateTotal();
+    });
+</script>
 
 <style>
     /* Radio button hover effect */
