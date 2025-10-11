@@ -9,9 +9,10 @@ class HomeController extends Controller
 {
     public function index()
     {
-        // Get featured listings (promoted or available listings)
+        // Get featured listings (prioritize those with active promotions)
         $featuredListings = Listing::where('status', 'available')
             ->with('seller')
+            ->orderByRaw('(EXISTS (SELECT 1 FROM promotions WHERE promotions.listing_id = listings.id AND promotions.status = "active" AND promotions.start_date <= NOW() AND promotions.end_date >= NOW())) DESC')
             ->latest()
             ->take(6)
             ->get();
