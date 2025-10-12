@@ -1,0 +1,131 @@
+@startuml CodeAlignedClassDiagram
+' Code-aligned Class Diagram (attributes first, then function names only)
+' Derived directly from app/Models and app/Http/Controllers without adding signatures
+
+title Code-Aligned Class Diagram
+
+skinparam classAttributeIconSize 0
+hide circle
+
+class User {
+  -- attributes --
+  +name
+  +email
+  +password
+  +phone
+  +house_no
+  +road_no
+  +thana
+  +postal_code
+  +address
+  +role
+  +verified
+  -- functions --
+  orders()
+}
+
+class Listing {
+  -- attributes --
+  +user_id
+  +animal_type
+  +breed
+  +age
+  +weight
+  +price
+  +location
+  +vaccination_info
+  +status
+  +image
+  -- functions --
+  user()
+  seller()
+  orders()
+  promotions()
+}
+
+class Order {
+  -- attributes --
+  +buyer_id
+  +listing_id
+  +quantity
+  +total_price
+  +additional_services_fee
+  +butcher_service
+  +delivery_service
+  +delivery_address
+  +phone
+  +payment_method
+  +notes
+  +status
+  -- functions --
+  buyer()
+  listing()
+  delivery()
+  butcherOrder()
+}
+
+class Delivery {
+  -- attributes --
+  +order_id
+  +delivery_man_id
+  +delivery_date
+  +delivery_address
+  +charge
+  +status
+  -- functions --
+  order()
+  deliveryMan()
+}
+
+class "ButcherOrder" as ButcherOrder {
+  -- attributes --
+  +order_id
+  +butcher_id
+  +scheduled_date
+  +charge
+  +status
+  -- functions --
+  order()
+  butcher()
+}
+
+class Promotion {
+  -- attributes --
+  +listing_id
+  +amount_paid
+  +fixed_discount
+  +percent_discount
+  +status
+  +start_date
+  +end_date
+  -- functions --
+  listing()
+}
+
+class Cart {
+  -- attributes --
+  +user_id
+  +listing_id
+  +quantity
+  +session_id
+  -- functions --
+  user()
+  listing()
+  getSubtotalAttribute()
+}
+
+' Relationships from Eloquent definitions
+User "1" -- "*" Order : orders
+User "1" -- "*" Listing : user/seller
+Listing "1" -- "*" Order : orders
+Listing "1" -- "*" Promotion : promotions
+Order "1" -- "1" Delivery : delivery
+Order "1" -- "1" ButcherOrder : butcherOrder
+Order "*" -- "1" Listing : listing
+Order "*" -- "1" User : buyer
+Delivery "*" -- "1" User : deliveryMan
+ButcherOrder "*" -- "1" User : butcher
+Cart "*" -- "1" User : user
+Cart "*" -- "1" Listing : listing
+
+@enduml

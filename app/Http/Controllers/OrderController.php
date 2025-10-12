@@ -28,18 +28,11 @@ class OrderController extends Controller
             DB::beginTransaction();
 
             $userId = Auth::id();
-            \Log::info('Order placement - User ID: ' . $userId);
-            \Log::info('Session ID: ' . session()->getId());
-            \Log::info('Auth check: ' . (Auth::check() ? 'true' : 'false'));
 
             // Get all cart items for the authenticated user
             $cartItems = Cart::with('listing')->where('user_id', $userId)->get();
             
-            \Log::info('Cart items count: ' . $cartItems->count());
-            \Log::info('Cart items: ' . json_encode($cartItems->toArray()));
-
             if ($cartItems->isEmpty()) {
-                \Log::warning('Cart is empty for user: ' . $userId);
                 
                 if ($request->expectsJson()) {
                     return response()->json([
@@ -54,6 +47,9 @@ class OrderController extends Controller
             $orders = [];
             $butcherService = $request->input('butcher_service', false);
             $deliveryService = $request->input('delivery_service', false);
+            $currentUser = Auth::user();
+            $deliveryAddress = $currentUser?->address ?? 'Not specified';
+            $phone = $currentUser?->phone ?? 'Not specified';
 
             // Calculate service fees
             $butcherFee = $butcherService ? 500 : 0;
@@ -74,8 +70,8 @@ class OrderController extends Controller
                     'additional_services_fee' => $additionalServicesFee,
                     'butcher_service'         => $butcherService,
                     'delivery_service'        => $deliveryService,
-                    'delivery_address'        => auth()->user()->address ?? 'Not specified',
-                    'phone'                   => auth()->user()->phone ?? 'Not specified',
+                    'delivery_address'        => $deliveryAddress,
+                    'phone'                   => $phone,
                     'payment_method'          => 'cash',
                     'status'                  => 'confirmed',
                 ]);
@@ -87,8 +83,6 @@ class OrderController extends Controller
             Cart::where('user_id', $userId)->delete();
 
             DB::commit();
-
-            \Log::info('Orders placed successfully for user: ' . $userId . ', count: ' . count($orders));
 
             if ($request->expectsJson()) {
                 return response()->json([
@@ -104,8 +98,6 @@ class OrderController extends Controller
         } catch (\Exception $e) {
             DB::rollBack();
             
-            \Log::error('Order placement error: ' . $e->getMessage());
-            \Log::error('Stack trace: ' . $e->getTraceAsString());
             
             if ($request->expectsJson()) {
                 return response()->json([
