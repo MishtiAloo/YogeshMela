@@ -1,61 +1,258 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+# YogeshMela — Laravel Livestock Marketplace
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+YogeshMela is a Laravel-based marketplace where verified sellers post animal listings and buyers can browse, filter, and purchase with optional delivery and butcher services. Admins verify sellers, manage promotions, and oversee operations. The project follows clean MVC architecture, normalized schema, and comprehensive documentation to support rapid iteration and maintainability.
 
-## About Laravel
+---
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+## Table of Contents
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+-   [YogeshMela — Laravel Livestock Marketplace](#yogeshmela--laravel-livestock-marketplace)
+    -   [Table of Contents](#table-of-contents)
+    -   [Overview](#overview)
+    -   [Features](#features)
+    -   [Tech Stack](#tech-stack)
+    -   [Project Structure](#project-structure)
+    -   [Getting Started (Windows)](#getting-started-windows)
+    -   [Database and Seeding](#database-and-seeding)
+    -   [Running and Building](#running-and-building)
+    -   [Roles and Access](#roles-and-access)
+    -   [Documentation](#documentation)
+    -   [Testing](#testing)
+    -   [Common Tasks](#common-tasks)
+    -   [Troubleshooting](#troubleshooting)
+    -   [Roadmap](#roadmap)
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+---
 
-## Learning Laravel
+## Overview
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+The platform emphasizes trust and convenience:
 
-You may also try the [Laravel Bootcamp](https://bootcamp.laravel.com), where you will be guided through building a modern Laravel application from scratch.
+-   **Buyers**: Browse listings, filter by attributes, and place orders.
+-   **Sellers**: Create, edit, and manage listings; request promotions.
+-   **Admins**: Verify sellers, approve promotions, and monitor activities.
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+**Core domain entities**:
 
-## Laravel Sponsors
+-   Users, Listings, Orders, Deliveries, Butcher Orders, Promotions, Carts, Sessions
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the [Laravel Partners program](https://partners.laravel.com).
+See `Documentations/Report/Goru.md` for consolidated domain notes.
 
-### Premium Partners
+---
 
-- **[Vehikl](https://vehikl.com)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel)**
-- **[DevSquad](https://devsquad.com/hire-laravel-developers)**
-- **[Redberry](https://redberry.international/laravel-development)**
-- **[Active Logic](https://activelogic.com)**
+## Features
 
-## Contributing
+-   **Authentication & Profiles**: Registration, login, profile management.
+-   **Roles**: Buyer, Seller, Admin, plus optional service roles (Butcher, Delivery).
+-   **Listings**:
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+    -   Attributes: animal type, breed, age, weight, price, location, vaccination.
+    -   Create, edit, and view listings.
+    -   Browse and filter for buyers.
 
-## Code of Conduct
+-   **Orders**:
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+    -   Place orders for listings.
+    -   Optional services: Delivery & Butcher (admin approval required).
+    -   Status lifecycle up to `delivered`.
 
-## Security Vulnerabilities
+-   **Promotions**:
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+    -   Sellers attach promotions to listings.
+    -   Admin approves or denies promotions.
 
-## License
+-   **Dashboards**: Role-specific summaries and actions.
+-   **Cart & Checkout**: Basic cart functionality and checkout scaffold.
+-   **Documentation**: Activity, Class, ERD, DFD, Sequence, Use Case, and Gantt diagrams in `Documentations/`.
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+---
+
+## Tech Stack
+
+-   **Backend**: Laravel (PHP) MVC, Eloquent ORM, Blade templating
+-   **Database**: MySQL / MariaDB (or compatible), managed via Laravel migrations
+-   **Frontend**: Vite, Node.js, npm for asset building
+-   **Testing & Data**: Seeders and Factories for demo and test data
+
+---
+
+## Project Structure
+
+-   **app/**: Controllers, Models, Middleware
+-   **resources/views/**: Blade templates for home, listings, dashboards, authentication, cart, checkout
+-   **resources/js & resources/css**: Vite-managed assets
+-   **database/**: migrations, seeders, factories
+-   **routes/**: web and API route definitions
+-   **Documentations/**: UML diagrams, reports, domain notes
+
+---
+
+## Getting Started (Windows)
+
+**Prerequisites**:
+
+-   PHP 8.2+ (Laravel Herd or XAMPP/WAMP)
+-   Composer
+-   Node.js 18+ and npm
+-   MySQL/MariaDB or PostgreSQL
+
+**Setup**:
+
+```bash
+# Clone repository
+git clone <repo-url>
+
+# Navigate into project
+cd yogeshmela
+
+# Setup environment
+copy .env.example .env
+php artisan key:generate
+
+# Configure database in .env
+# DB_CONNECTION=mysql
+# DB_HOST=127.0.0.1
+# DB_PORT=3306
+# DB_DATABASE=yogeshmela
+# DB_USERNAME=<user>
+# DB_PASSWORD=<pass>
+
+# Install dependencies
+composer install
+npm install
+```
+
+---
+
+## Database and Seeding
+
+-   Run migrations and seeders:
+
+```bash
+php artisan migrate --seed
+```
+
+-   **Tables created**: users, listings, orders, deliveries, butcher_orders, promotions, sessions, carts, cache, jobs
+-   **Seeded demo data**: Check `database/seeders/*.php`
+
+---
+
+## Running and Building
+
+-   **Start local server**:
+
+```bash
+php artisan serve
+```
+
+Open [http://127.0.0.1:8000](http://127.0.0.1:8000)
+
+-   **Assets**:
+
+    -   Development: `npm run dev`
+    -   Production: `npm run build`
+
+-   **Optional queues**:
+
+```bash
+php artisan queue:table
+php artisan queue:work
+```
+
+---
+
+## Roles and Access
+
+-   **Buyer**: Browse, add to cart, place orders, view dashboard
+-   **Seller**: Manage listings, request promotions, mark orders delivered
+-   **Admin**: Verify sellers, approve promotions, review dashboards
+
+Middleware ensures route and action protection per role.
+
+---
+
+## Documentation
+
+All diagrams and planning artifacts are in `Documentations/`:
+
+-   **Activity**: High-level user flows (login, registration, order lifecycle, dashboards, promotions)
+-   **Class**: Domain class structure
+-   **ERD**: Tables, keys, cardinalities
+-   **DFD**: Context-level, Level 0 (processes), Level 1 (subprocesses with DB)
+-   **Sequence**: MVC interactions and entity lifecycles
+-   **UseCase**: Actors and system interactions
+-   **Gantt**: Project phases, milestones
+-   **Report/Goru.md**: Domain goals, features, notes
+
+---
+
+## Testing
+
+-   Run Laravel tests:
+
+```bash
+php artisan test
+```
+
+-   Test focus areas:
+
+    -   Authentication
+    -   Listing filters and pagination
+    -   Order creation and lifecycle
+    -   Optional services and admin approvals
+    -   Seller verification and promotion workflow
+    -   Role-based dashboard access
+
+---
+
+## Common Tasks
+
+-   **Generate model + migration + factory**:
+
+```bash
+php artisan make:model Listing -m -f
+```
+
+-   **Create controller**:
+
+```bash
+php artisan make:controller ListingController --resource
+```
+
+-   **Seeder**:
+
+```bash
+php artisan make:seeder ListingSeeder
+php artisan db:seed --class=ListingSeeder
+```
+
+-   **Cache & optimization**:
+
+```bash
+php artisan optimize:clear
+```
+
+---
+
+## Troubleshooting
+
+-   **Blank pages / 500 errors**: Check `APP_KEY` and DB credentials
+-   **CSS / JS not loading**: Run `npm run dev` or `npm run build`; verify `@vite` tags
+-   **Foreign key issues**: Verify migration order
+-   **Seeded credentials**: Inspect `UserSeeder.php`
+-   **Sessions not persisting**: Check `SESSION_DRIVER` and sessions table
+
+---
+
+## Roadmap
+
+Future improvements:
+
+-   Payments and reconciliation
+-   Notifications (email, SMS, in-app)
+-   Seller ratings and reviews
+-   Coupons, promotions, and analytics
+-   Buyer-seller chat with moderation
+-   Reporting dashboards and CSV export
+-   Internationalization and accessibility
+-   Image optimization
